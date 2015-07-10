@@ -47,21 +47,26 @@ public class Launcher {
             arrowCap.setPosition(point2.x - (arrowCap.getWidth() / 2), point2.y);
             arrowCap.setOrigin(arrowCap.getWidth() / 2, 0f);
         }
-        /*points.clear();
+        points.clear();
         if (isPressed) {
+            float distance = 0;
             for (int i = 0; i < 100; i++) {
                 float h = point2.x;
                 float k = point2.y;
                 float x = point1.x;
                 float y = point1.y;
                 double a = -y / (Math.pow(x - h, 2) + k);
-                Vector2 p = new Vector2(point1.x - (i*5),
-                        (float) (a * Math.pow((point1.x - (i*5)) - h, 2) + k));
+                Vector2 p = new Vector2(point1.x - (i * 5),
+                        (float) (a * Math.pow((point1.x - (i * 5)) - h, 2) + k));
                 points.add(p);
+                distance = (float) (a * Math.pow((point1.x) - h, 2) + k);
+            }
+            for (int i = 0; i < points.size(); i++) {
+                points.get(i).set(points.get(i).x, points.get(i).y - distance + point1.y);
             }
 
 
-        }*/
+        }
     }
 
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
@@ -69,6 +74,12 @@ public class Launcher {
             if (Configuration.DEBUG) {
                 batch.end();
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+
+                shapeRenderer.setColor(FlatColors.GREEN);
+                for (int i = 0; i < points.size(); i++) {
+                    shapeRenderer.circle(points.get(i).x, points.get(i).y, 3);
+                }
+
                 shapeRenderer.setColor(FlatColors.RED);
                 shapeRenderer.circle(point1.x, point1.y, 5);
                 shapeRenderer.circle(point2.x, point2.y, 5);
@@ -97,7 +108,7 @@ public class Launcher {
     public void touchDragged(int x, int y) {
         float px = x - point1.x;
         float py = y - point1.y;
-        point2.set(point1.x - px, point1.y - py);
+        point2.set(point1.x - px, point1.y - py );
         fadeColor(FlatColors.RED, FlatColors.GREEN, distanceBetweenTwoPoints(point1, point2) - 100);
     }
 
