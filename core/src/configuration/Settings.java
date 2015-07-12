@@ -7,7 +7,8 @@ public class Settings {
 
     //GAMEWORLD
     public static final float WORLD_GRAVITY = -25.8f;
-    public static final float PTM = 100f;
+    public static final float PTM = 100f; //Pixels Per Metter (Don't Touch this)
+    public static final float BANNER_HEIGHT = 120;
 
     //BALL
     public static final float BALL_FORCE_SCALE = 0.07f;

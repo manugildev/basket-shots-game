@@ -57,7 +57,7 @@ public class Text extends GameObject {
                 true);
         font.setColor(Color.WHITE);
         batch.setShader(null);
-        if (!Configuration.DEBUG) {
+        if (Configuration.DEBUG) {
             batch.end();
             shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(FlatColors.DARK_GREEN);

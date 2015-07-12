@@ -9,6 +9,7 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
     public static final int ALPHA = 1;
     public static final int SCALE = 2;
     public static final int VERTICAL = 3;
+    public static final int SCALEY = 4;
 
     @Override
     public int getValues(Sprite target, int tweenType, float[] returnValues) {
@@ -22,6 +23,9 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
             case VERTICAL:
                 returnValues[0] = target.getY();
                 return 3;
+            case SCALEY:
+                returnValues[0] = target.getScaleY();
+                return 4;
             default:
                 return 0;
         }
@@ -39,6 +43,9 @@ public class SpriteAccessor implements TweenAccessor<Sprite> {
                 break;
             case VERTICAL:
                 target.setY(newValues[0]);
+                break;
+            case SCALEY:
+                target.setScale(1, newValues[0]);
                 break;
         }
     }

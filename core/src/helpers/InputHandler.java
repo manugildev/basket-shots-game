@@ -27,6 +27,8 @@ public class InputHandler implements InputProcessor {
             if (Configuration.DEBUG) Configuration.DEBUG = false;
             else Configuration.DEBUG = true;
         } else if (keycode == Input.Keys.A) {
+        }else if(keycode == Input.Keys.S){
+            world.banner.start();
         }
         return false;
     }

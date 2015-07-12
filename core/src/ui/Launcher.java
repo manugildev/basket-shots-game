@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -37,8 +36,7 @@ public class Launcher {
 
     public void update(float delta) {
         if (isPressed) {
-            world.ball.setTransform(point1);
-            world.ball.body.setLinearVelocity(0, 0);
+            world.ball.setToLauncher(point1);
             sprite.setRotation(angleBetweenTwoPoints(point1, point2) + 180);
             sprite.setSize(Settings.ARROW_WIDTH, distanceBetweenTwoPoints(point1, point2));
             sprite.setOrigin(sprite.getWidth() / 2, 0f);
@@ -47,6 +45,7 @@ public class Launcher {
             arrowCap.setPosition(point2.x - (arrowCap.getWidth() / 2), point2.y);
             arrowCap.setOrigin(arrowCap.getWidth() / 2, 0f);
         }
+        /*
         points.clear();
         if (isPressed) {
             float distance = 0;
@@ -64,9 +63,7 @@ public class Launcher {
             for (int i = 0; i < points.size(); i++) {
                 points.get(i).set(points.get(i).x, points.get(i).y - distance + point1.y);
             }
-
-
-        }
+        }*/
     }
 
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
@@ -75,10 +72,10 @@ public class Launcher {
                 batch.end();
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-                shapeRenderer.setColor(FlatColors.GREEN);
+                /*shapeRenderer.setColor(FlatColors.GREEN);
                 for (int i = 0; i < points.size(); i++) {
                     shapeRenderer.circle(points.get(i).x, points.get(i).y, 3);
-                }
+                }*/
 
                 shapeRenderer.setColor(FlatColors.RED);
                 shapeRenderer.circle(point1.x, point1.y, 5);
@@ -100,9 +97,8 @@ public class Launcher {
 
     public void touchUp() {
         isPressed = false;
-        world.ball.body
-                .setLinearVelocity(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
-        world.ball.body.setAngularVelocity(MathUtils.random(-10, 10));
+        world.ball.flight(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
+
     }
 
     public void touchDragged(int x, int y) {

@@ -21,6 +21,7 @@ import gameobjects.Floor;
 import gameobjects.GameObject;
 import helpers.AssetLoader;
 import helpers.FlatColors;
+import ui.Banner;
 import ui.Launcher;
 import ui.Text;
 
@@ -34,6 +35,7 @@ public class GameWorld {
     public Basket basket;
     public Launcher launcher;
     public Text scoreT;
+    public Banner banner;
 
     //BOX2D
     public World worldB;
@@ -64,6 +66,8 @@ public class GameWorld {
         scoreT = new Text(this, 700, gameHeight- 150, gameWidth-1400, 100, AssetLoader.square, Color.WHITE,
                 "0", AssetLoader.font, FlatColors.WHITE,10,
                 Align.center);
+        banner = new Banner(this,0,gameHeight/2-(Settings.BANNER_HEIGHT/2),gameWidth,Settings.BANNER_HEIGHT,AssetLoader.square,FlatColors.RED,
+                GameObject.Shape.RECTANGLE);
 
     }
 
@@ -74,6 +78,7 @@ public class GameWorld {
         basket.update(delta);
         launcher.update(delta);
         scoreT.update(delta);
+        banner.update(delta);
     }
 
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
@@ -89,6 +94,7 @@ public class GameWorld {
         ball.render(batch, shapeRenderer);
         basket.render(batch, shapeRenderer);
         scoreT.render(batch, shapeRenderer, GameRenderer.fontShader);
+        banner.render(batch,shapeRenderer);
         if (Configuration.DEBUG) debugRenderer.render(worldB, debugMatrix);
 
     }

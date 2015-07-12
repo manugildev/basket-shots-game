@@ -12,9 +12,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import configuration.Settings;
 import gameworld.GameWorld;
 
-/**
- * Created by ManuGil on 08/07/15.
- */
 public class Floor extends GameObject {
 
     private Body body;
@@ -23,6 +20,8 @@ public class Floor extends GameObject {
                  TextureRegion texture,
                  Color color, Shape shap) {
         super(world, x, y, width, height, texture, color, shap);
+
+        rectangle.setHeight(rectangle.height + 5);
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.StaticBody;
