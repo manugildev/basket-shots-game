@@ -14,11 +14,12 @@ public class Settings {
     public static final float BALL_FORCE_SCALE = 0.07f;
     public static final boolean FADE_OUT_ON_FLOOR = false; //Set to false for testing
     public static final int NUM_OF_INITIAL_BALLS = 1;
+    public static final String TOP_POINTER_COLOR = "#e74c3c";
 
     //ARROw
     public static final float ARROW_WIDTH = 100;
     public static final String ARROW_GREEN_COLOR = "55a08b";
-    public static final String ARROW_RED_COLOR ="b63535" ;
+    public static final String ARROW_RED_COLOR = "#e74c3c";
 
     //COLLISION
     public static final short CATEGORY_BALL = 0x0001;  // 0000000000000001 in binary

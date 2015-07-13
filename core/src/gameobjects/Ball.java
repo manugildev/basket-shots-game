@@ -19,6 +19,7 @@ import aurelienribon.tweenengine.TweenCallback;
 import configuration.Settings;
 import gameworld.GameWorld;
 import helpers.AssetLoader;
+import helpers.FlatColors;
 import tweens.Value;
 import tweens.ValueAccessor;
 
@@ -66,8 +67,10 @@ public class Ball extends GameObject {
         body.createFixture(fixtureDef);
         shape.dispose();
         circle.setRadius(sprite.getWidth() / 2);
+
         pointer = new Sprite(AssetLoader.pointer);
-        pointer.setSize(40, 40);
+        pointer.setSize(50, 50);
+        pointer.setColor(FlatColors.parseColor(Settings.TOP_POINTER_COLOR));
 
         shadow = new Sprite(AssetLoader.shadow);
         shadow.setPosition(circle.x, world.floor.getRectangle().height - 10);
@@ -158,17 +161,17 @@ public class Ball extends GameObject {
 
     public void touchedFloor() {
         if (isFlying()) {
-
-            fadeOut(1.3f, 0.1f);
+            if (Settings.FADE_OUT_ON_FLOOR)
+                fadeOut(1.3f, 0.1f);
             ballState = BallState.FLOOR;
             Value timer = new Value();
-            if (Settings.FADE_OUT_ON_FLOOR)
-                fadeOutTween = Tween.to(timer, -1, 1.4f).target(1).setCallback(new TweenCallback() {
-                    @Override
-                    public void onEvent(int type, BaseTween<?> source) {
-                        ballState = BallState.IDLE;
-                    }
-                }).setCallbackTriggers(TweenCallback.COMPLETE).start(getManager());
+            fadeOutTween = Tween.to(timer, -1, 1.4f).target(1).setCallback(new TweenCallback() {
+                @Override
+                public void onEvent(int type, BaseTween<?> source) {
+                    ballState = BallState.IDLE;
+                }
+            }).setCallbackTriggers(TweenCallback.COMPLETE).start(getManager());
+
         }
     }
 

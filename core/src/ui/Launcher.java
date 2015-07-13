@@ -140,9 +140,9 @@ public class Launcher {
             // Do it in n steps.
             if (step < 0) step = 0;
             final Color c = new Color(
-                    color2.r + ((dRed * step) / 100),
-                    color2.g + ((dGreen * step) / 100),
-                    color2.b + ((dBlue * step) / 100), 1f);
+                    color2.r + ((dRed * step) / 30),
+                    color2.g + ((dGreen * step) / 80),
+                    color2.b + ((dBlue * step) / 80), 1f);
             arrowCap.setColor(c);
             sprite.setColor(c);
 
