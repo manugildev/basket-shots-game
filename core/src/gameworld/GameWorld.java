@@ -12,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Align;
 
+import java.util.ArrayList;
+
 import MainGame.BasketballGame;
 import configuration.Configuration;
 import configuration.Settings;
@@ -36,6 +38,8 @@ public class GameWorld {
     public Launcher launcher;
     public Text scoreT;
     public Banner banner;
+    public GameObject background;
+    public ArrayList<Ball> balls = new ArrayList<Ball>();
 
     //BOX2D
     public World worldB;
@@ -55,26 +59,41 @@ public class GameWorld {
         debugRenderer = new Box2DDebugRenderer();
 
         //GAMEOBJECTS
-        floor = new Floor(this, 1, 0, gameWidth - 2, 100, AssetLoader.square, FlatColors.GREY,
+        background = new GameObject(this, 0, 0, gameWidth, gameHeight, AssetLoader.background,
+                Color.WHITE,
                 GameObject.Shape.RECTANGLE);
-        ball = new Ball(this, gameWidth / 2, gameHeight / 2, 100, 100, AssetLoader.ball,
-                FlatColors.WHITE, GameObject.Shape.CIRCLE);
-        basket = new Basket(this, 100, 100, 50, gameHeight - 200, AssetLoader.square,
+        floor = new Floor(this, 1, 0, gameWidth - 2, 150, AssetLoader.square, FlatColors.GREY,
+                GameObject.Shape.RECTANGLE);
+        /*ball = new Ball(this, gameWidth / 2, gameHeight / 2, 100, 100, AssetLoader.ball,
+                FlatColors.WHITE, GameObject.Shape.CIRCLE);*/
+        for (int i = 0; i < Settings.NUM_OF_INITIAL_BALLS; i++) {
+            Ball b = new Ball(this, gameWidth / 2, gameHeight / 2, 100, 100, AssetLoader.ball,
+                    FlatColors.WHITE, GameObject.Shape.CIRCLE);
+            balls.add(b);
+        }
+        basket = new Basket(this, 100, 100, 50, gameHeight - 360, AssetLoader.square,
                 FlatColors.GREY,
                 GameObject.Shape.RECTANGLE);
         launcher = new Launcher(this);
-        scoreT = new Text(this, 700, gameHeight- 150, gameWidth-1400, 100, AssetLoader.square, Color.WHITE,
-                "0", AssetLoader.font, FlatColors.WHITE,10,
+        scoreT = new Text(this, 700, gameHeight - 150, gameWidth - 1400, 100, AssetLoader.square,
+                Color.WHITE,
+                "0", AssetLoader.font, FlatColors.BLACK, 10,
                 Align.center);
-        banner = new Banner(this,0,gameHeight/2-(Settings.BANNER_HEIGHT/2),gameWidth,Settings.BANNER_HEIGHT,AssetLoader.square,FlatColors.RED,
+        banner = new Banner(this, 0, gameHeight / 2 - (Settings.BANNER_HEIGHT / 2), gameWidth,
+                Settings.BANNER_HEIGHT, AssetLoader.square, FlatColors.RED,
                 GameObject.Shape.RECTANGLE);
+
+
 
     }
 
     public void update(float delta) {
         worldB.step(1f / 60f, 6, 2);
+        background.update(delta);
         floor.update(delta);
-        ball.update(delta);
+        for (int i = 0; i < balls.size(); i++) {
+            balls.get(i).update(delta);
+        }
         basket.update(delta);
         launcher.update(delta);
         scoreT.update(delta);
@@ -89,12 +108,15 @@ public class GameWorld {
 
 
         }
+        background.render(batch, shapeRenderer);
         floor.render(batch, shapeRenderer);
         launcher.render(batch, shapeRenderer);
-        ball.render(batch, shapeRenderer);
+        for (int i = 0; i < balls.size(); i++) {
+            balls.get(i).render(batch, shapeRenderer);
+        }
         basket.render(batch, shapeRenderer);
         scoreT.render(batch, shapeRenderer, GameRenderer.fontShader);
-        banner.render(batch,shapeRenderer);
+        banner.render(batch, shapeRenderer);
         if (Configuration.DEBUG) debugRenderer.render(worldB, debugMatrix);
 
     }

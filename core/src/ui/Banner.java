@@ -17,9 +17,6 @@ import helpers.FlatColors;
 import tweens.SpriteAccessor;
 import tweens.Value;
 
-/**
- * Created by ManuGil on 12/07/15.
- */
 public class Banner extends GameObject {
 
     public Text text;

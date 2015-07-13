@@ -36,7 +36,7 @@ public class Launcher {
 
     public void update(float delta) {
         if (isPressed) {
-            world.ball.setToLauncher(point1);
+            world.balls.get(0).setToLauncher(point1);
             sprite.setRotation(angleBetweenTwoPoints(point1, point2) + 180);
             sprite.setSize(Settings.ARROW_WIDTH, distanceBetweenTwoPoints(point1, point2));
             sprite.setOrigin(sprite.getWidth() / 2, 0f);
@@ -97,15 +97,18 @@ public class Launcher {
 
     public void touchUp() {
         isPressed = false;
-        world.ball.flight(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
+        world.balls.get(0).flight(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
 
     }
 
     public void touchDragged(int x, int y) {
         float px = x - point1.x;
         float py = y - point1.y;
-        point2.set(point1.x - px, point1.y - py );
-        fadeColor(FlatColors.RED, FlatColors.GREEN, distanceBetweenTwoPoints(point1, point2) - 100);
+
+        point2.set(point1.x - px, point1.y - py);
+        fadeColor(FlatColors.parseColor(Settings.ARROW_RED_COLOR),
+                FlatColors.parseColor(Settings.ARROW_GREEN_COLOR),
+                distanceBetweenTwoPoints(point1, point2) - 250);
     }
 
     public static float angleBetweenTwoPoints(Vector2 one, Vector2 two) {
@@ -120,6 +123,7 @@ public class Launcher {
     }
 
     public float distanceBetweenTwoPoints(Vector2 p1, Vector2 p2) {
+
         return (float) Math.sqrt(Math.pow((p2.x - p1.x), 2) + Math.pow((p2.y - p1.y), 2));
     }
 
@@ -136,9 +140,9 @@ public class Launcher {
             // Do it in n steps.
             if (step < 0) step = 0;
             final Color c = new Color(
-                    color2.r + ((dRed * step) / 300),
-                    color2.g + ((dGreen * step) / 300),
-                    color2.b + ((dBlue * step) / 300), 1f);
+                    color2.r + ((dRed * step) / 100),
+                    color2.g + ((dGreen * step) / 100),
+                    color2.b + ((dBlue * step) / 100), 1f);
             arrowCap.setColor(c);
             sprite.setColor(c);
 

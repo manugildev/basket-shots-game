@@ -9,13 +9,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 import configuration.Configuration;
 
-/**
- * Created by ManuGil on 09/03/15.
- */
 public class AssetLoader {
 
-    public static Texture logoTexture, dotT, arrowCapT, arrowBotT, ballT;
-    public static TextureRegion logo, square, dot, arrowCap, arrowBot, ball;
+    public static Texture logoTexture, dotT, arrowCapT, arrowBotT, ballT, backgroundT, netT, shadowT, pointerT;
+    public static TextureRegion logo, square, dot, arrowCap, arrowBot, ball, background, net, shadow, pointer;
 
     private static Preferences prefs;
     public static BitmapFont font;
@@ -33,13 +30,38 @@ public class AssetLoader {
         dotT = new Texture(Gdx.files.internal("dot.png"));
         dotT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         dot = new TextureRegion(dotT);
+
+        backgroundT = new Texture("background.png");
+        backgroundT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        background = new TextureRegion(backgroundT);
+
+        //ARROW
         arrowCapT = new Texture("arrowCap.png");
+        arrowCapT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         arrowBotT = new Texture("arrowBot.png");
+        arrowBotT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         arrowCap = new TextureRegion(arrowCapT);
         arrowBot = new TextureRegion(arrowBotT);
+
+        //BALL
         ballT = new Texture("ball.png");
         ballT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         ball = new TextureRegion(ballT);
+
+        //NET
+        netT = new Texture("net.png");
+        netT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        net = new TextureRegion(netT);
+
+        //shadow
+        shadowT = new Texture("shadow.png");
+        shadowT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        shadow = new TextureRegion(shadowT);
+
+        //pointer
+        pointerT = new Texture("pointer.png");
+        pointerT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        pointer = new TextureRegion(pointerT);
 
 
         //FONTS
