@@ -25,8 +25,9 @@ public class InputHandler implements InputProcessor {
         } else if (keycode == Input.Keys.D) {
             if (Configuration.DEBUG) Configuration.DEBUG = false;
             else Configuration.DEBUG = true;
-        } else if (keycode == Input.Keys.A) {
-        }else if(keycode == Input.Keys.S){
+        } else if (keycode == Input.Keys.M) {
+            world.goToMenu();
+        } else if (keycode == Input.Keys.S) {
             world.banner.start();
         }
         return false;
@@ -46,7 +47,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
-        world.launcher.touchDown(screenX,screenY);
+        world.launcher.touchDown(screenX, screenY);
         return false;
     }
 
@@ -63,7 +64,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
-        world.launcher.touchDragged(screenX,screenY);
+        world.launcher.touchDragged(screenX, screenY);
         return false;
     }
 

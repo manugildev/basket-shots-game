@@ -11,7 +11,7 @@ public interface ActionResolver {
 
     public void submitScore(long score);
 
-    public void showScores();
+    public  void showScores();
 
     public boolean isSignedIn();
 

@@ -11,6 +11,7 @@ import helpers.InputHandler;
 
 public class GameScreen implements Screen {
     private static GameWorld world;
+    public static BasketballGame game;
     private GameRenderer renderer;
     public static float sW = Gdx.graphics.getWidth();
     public static float sH = Gdx.graphics.getHeight();
@@ -18,8 +19,9 @@ public class GameScreen implements Screen {
     public static float gameWidth = sW / (sH / gameHeight);
 
     public GameScreen(BasketballGame game, ActionResolver actionResolver) {
+        this.game = game;
         Gdx.app.log("GameWidth " + gameWidth, "GameHeight " + gameHeight);
-        world = new GameWorld(game, gameWidth, gameHeight);
+        world = new GameWorld(game, actionResolver, gameWidth, gameHeight);
         Gdx.input.setInputProcessor(new InputHandler(world, sW / gameWidth, sH
                 / gameHeight));
         renderer = new GameRenderer(world);

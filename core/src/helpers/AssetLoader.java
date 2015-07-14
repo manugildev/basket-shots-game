@@ -14,6 +14,9 @@ public class AssetLoader {
     public static Texture logoTexture, dotT, arrowCapT, arrowBotT, ballT, backgroundT, netT, shadowT, pointerT;
     public static TextureRegion logo, square, dot, arrowCap, arrowBot, ball, background, net, shadow, pointer;
 
+    public static Texture backgroundMenuT, titleT, buttonsT;
+    public static TextureRegion backgroundMenu, title, playButton, practiceButton, scoresButton, shareButton;
+
     private static Preferences prefs;
     public static BitmapFont font;
 
@@ -63,6 +66,25 @@ public class AssetLoader {
         pointerT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         pointer = new TextureRegion(pointerT);
 
+
+        //MENU
+        //BACKGROUND MENU
+        backgroundMenuT = new Texture("background_menu.png");
+        backgroundMenuT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        backgroundMenu = new TextureRegion(backgroundMenuT);
+
+        //TITLE LOGO
+        titleT = new Texture("title.png");
+        titleT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        title = new TextureRegion(titleT);
+
+        //BUTTONS
+        buttonsT = new Texture("buttons.png");
+        buttonsT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+        playButton = new TextureRegion(buttonsT,0,(buttonsT.getHeight()/4)*0,buttonsT.getWidth(),buttonsT.getHeight()/4);
+        practiceButton = new TextureRegion(buttonsT,0,(buttonsT.getHeight()/4)*1,buttonsT.getWidth(),buttonsT.getHeight()/4);
+        scoresButton = new TextureRegion(buttonsT,0,(buttonsT.getHeight()/4)*2,buttonsT.getWidth(),buttonsT.getHeight()/4);
+        shareButton = new TextureRegion(buttonsT,0,(buttonsT.getHeight()/4)*3,buttonsT.getWidth(),buttonsT.getHeight()/4);
 
         //FONTS
         //LOADING FONT

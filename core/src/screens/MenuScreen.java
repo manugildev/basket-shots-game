@@ -6,12 +6,13 @@ import com.badlogic.gdx.Screen;
 import MainGame.ActionResolver;
 import MainGame.BasketballGame;
 import gameworld.GameRenderer;
-import helpers.InputHandler;
+import menuworld.InputHandlerMenu;
 import menuworld.MenuWorld;
 
 public class MenuScreen implements Screen {
 
     private static MenuWorld world;
+    public static BasketballGame game;
     private GameRenderer renderer;
     public static float sW = Gdx.graphics.getWidth();
     public static float sH = Gdx.graphics.getHeight();
@@ -19,9 +20,10 @@ public class MenuScreen implements Screen {
     public static float gameWidth = sW / (sH / gameHeight);
 
     public MenuScreen(BasketballGame game, ActionResolver actionresolver) {
+        this.game = game;
         Gdx.app.log("GameWidth " + gameWidth, "GameHeight " + gameHeight);
-        world = new MenuWorld(game, gameWidth, gameHeight);
-        Gdx.input.setInputProcessor(new InputHandler(world, sW / gameWidth, sH
+        world = new MenuWorld(game, actionresolver, gameWidth, gameHeight);
+        Gdx.input.setInputProcessor(new InputHandlerMenu(world, sW / gameWidth, sH
                 / gameHeight));
         renderer = new GameRenderer(world);
     }
@@ -34,9 +36,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
-
     }
-
 
     @Override
     public void resize(int width, int height) {

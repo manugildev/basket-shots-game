@@ -13,7 +13,7 @@ public class Settings {
     //BALL
     public static final float BALL_FORCE_SCALE = 0.07f;
     public static final boolean FADE_OUT_ON_FLOOR = true; //Set to false for testing
-    public static final int NUM_OF_INITIAL_BALLS = 3;
+    public static final int NUM_OF_INITIAL_BALLS = 20;
     public static final String TOP_POINTER_COLOR = "#e74c3c";
 
     //ARROw

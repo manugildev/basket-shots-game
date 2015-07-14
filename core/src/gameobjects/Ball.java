@@ -38,7 +38,7 @@ public class Ball extends GameObject {
     private Sprite shadow;
 
     private Tween fadeOutTween;
-    public Boolean c1 = false, c2=false;
+    public Boolean c1 = false, c2 = false;
 
     public Ball(GameWorld world, float x, float y, float width, float height,
                 TextureRegion texture,
@@ -86,7 +86,7 @@ public class Ball extends GameObject {
             body.setLinearVelocity(Vector2.Zero);
             body.setAngularVelocity(0);
             body.setGravityScale(0);
-            body.setTransform(new Vector2(),0);
+            body.setTransform(new Vector2(), 0);
         } else {
             super.update(delta);
             sprite.setPosition((body.getPosition().x * Settings.PTM),
@@ -123,8 +123,10 @@ public class Ball extends GameObject {
     }
 
     private void collisions() {
-        if (Intersector.overlaps(circle,
-                world.floor.rectangle) && isFlying()) {
+        if (Intersector.overlaps(circle, world.floor.rectangle) && isFlying()) {
+            touchedFloor();
+        }
+        if (sprite.getX() < -100) {
             touchedFloor();
         }
     }
@@ -145,8 +147,10 @@ public class Ball extends GameObject {
         ballState = BallState.LAUNCHER;
         setTransform(point1);
         body.setLinearVelocity(0, 0);
-        sprite.setAlpha(1);
+        sprite.setPosition((body.getPosition().x * Settings.PTM),
+                (body.getPosition().y * Settings.PTM));
         if (fadeOutTween != null) fadeOutTween.kill();
+        sprite.setAlpha(1);
     }
 
     public void flight(Vector2 vel) {
@@ -195,7 +199,7 @@ public class Ball extends GameObject {
 
 
     public void resetScoreLogics() {
-        isScored =false;
+        isScored = false;
         c1 = false;
         c2 = false;
     }
