@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ public class Launcher {
     private GameWorld world;
     private Sprite sprite, arrowCap;
     private Ball currentBall;
+    public Rectangle rect;
 
     public Launcher(GameWorld world) {
         this.world = world;
@@ -34,6 +36,8 @@ public class Launcher {
         arrowCap.setSize(Settings.ARROW_WIDTH, (Settings.ARROW_WIDTH * AssetLoader.arrowCap
                 .getRegionHeight()) / AssetLoader.arrowCap
                 .getRegionWidth());
+        rect = new Rectangle(world.basket.getPosition().x + 400, world.floor.getRectangle().height,
+                world.gameWidth, world.gameHeight);
     }
 
     public void update(float delta) {
@@ -86,16 +90,20 @@ public class Launcher {
     }
 
     public void touchDown(int x, int y) {
-        isPressed = true;
-        point1.set(x, y);
-        point2.set(x, y);
-        currentBall = world.getIdleBall();
-        currentBall.resetScoreLogics();
+        if (rect.contains(x, y)) {
+            isPressed = true;
+            point1.set(x, y);
+            point2.set(x, y);
+            currentBall = world.getIdleBall();
+            currentBall.resetScoreLogics();
+        }
     }
 
     public void touchUp() {
-        isPressed = false;
-        currentBall.flight(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
+        if (isPressed) {
+            isPressed = false;
+            currentBall.flight(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
+        }
 
     }
 

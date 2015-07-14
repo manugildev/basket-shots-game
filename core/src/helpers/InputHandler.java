@@ -1,5 +1,6 @@
 package helpers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
@@ -16,6 +17,7 @@ public class InputHandler implements InputProcessor {
         this.scaleFactorX = scaleFactorX;
         this.scaleFactorY = scaleFactorY;
         this.world = world;
+        Gdx.input.setCatchBackKey(true);
     }
 
     @Override
@@ -29,6 +31,8 @@ public class InputHandler implements InputProcessor {
             world.goToMenu();
         } else if (keycode == Input.Keys.S) {
             world.banner.start();
+        } else if (keycode == Input.Keys.BACK) {
+            world.goToMenu();
         }
         return false;
     }
@@ -47,6 +51,7 @@ public class InputHandler implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
+        world.homeButton.isTouchDown(screenX, screenY);
         world.launcher.touchDown(screenX, screenY);
         return false;
     }
@@ -55,7 +60,11 @@ public class InputHandler implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
-        world.launcher.touchUp();
+        if (world.homeButton.isTouchUp(screenX, screenY)) {
+            world.goToMenu();
+        } else {
+            world.launcher.touchUp();
+        }
         return false;
     }
 

@@ -15,7 +15,7 @@ public class AssetLoader {
     public static TextureRegion logo, square, dot, arrowCap, arrowBot, ball, background, net, shadow, pointer;
 
     public static Texture backgroundMenuT, titleT, buttonsT;
-    public static TextureRegion backgroundMenu, title, playButton, practiceButton, scoresButton, shareButton;
+    public static TextureRegion backgroundMenu, title, playButton, practiceButton, scoresButton, shareButton, homeButton;
 
     private static Preferences prefs;
     public static BitmapFont font;
@@ -79,12 +79,19 @@ public class AssetLoader {
         title = new TextureRegion(titleT);
 
         //BUTTONS
+        int numOfLines = 5;
         buttonsT = new Texture("buttons.png");
         buttonsT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-        playButton = new TextureRegion(buttonsT,0,(buttonsT.getHeight()/4)*0,buttonsT.getWidth(),buttonsT.getHeight()/4);
-        practiceButton = new TextureRegion(buttonsT,0,(buttonsT.getHeight()/4)*1,buttonsT.getWidth(),buttonsT.getHeight()/4);
-        scoresButton = new TextureRegion(buttonsT,0,(buttonsT.getHeight()/4)*2,buttonsT.getWidth(),buttonsT.getHeight()/4);
-        shareButton = new TextureRegion(buttonsT,0,(buttonsT.getHeight()/4)*3,buttonsT.getWidth(),buttonsT.getHeight()/4);
+        playButton = new TextureRegion(buttonsT, 0, (buttonsT.getHeight() / numOfLines) * 0,
+                buttonsT.getWidth(), buttonsT.getHeight() / numOfLines);
+        practiceButton = new TextureRegion(buttonsT, 0, (buttonsT.getHeight() / numOfLines) * 1,
+                buttonsT.getWidth(), buttonsT.getHeight() / numOfLines);
+        scoresButton = new TextureRegion(buttonsT, 0, (buttonsT.getHeight() / numOfLines) * 2,
+                buttonsT.getWidth(), buttonsT.getHeight() / numOfLines);
+        shareButton = new TextureRegion(buttonsT, 0, (buttonsT.getHeight() / numOfLines) * 3,
+                buttonsT.getWidth(), buttonsT.getHeight() / numOfLines);
+        homeButton = new TextureRegion(buttonsT, 0, (buttonsT.getHeight() / numOfLines) * 4,
+                168, buttonsT.getHeight() / numOfLines);
 
         //FONTS
         //LOADING FONT

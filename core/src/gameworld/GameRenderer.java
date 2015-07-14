@@ -44,7 +44,7 @@ public class GameRenderer {
         camera.render(batch, shapeRenderer);
         world.render(batch, shapeRenderer);
         if (Configuration.FPS_COUNTER)
-            font.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), 50, world.gameHeight-50);
+            font.draw(batch, "fps: " + Gdx.graphics.getFramesPerSecond(), 50, 50);
         batch.end();
 
 

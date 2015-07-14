@@ -184,7 +184,7 @@ public class Basket extends GameObject {
     @Override
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
         if (Configuration.DEBUG) {
-            super.render(batch, shapeRenderer);
+            //super.render(batch, shapeRenderer);
             contact1.render(batch, shapeRenderer);
             contact2.render(batch, shapeRenderer);
         }

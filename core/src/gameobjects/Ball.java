@@ -70,6 +70,7 @@ public class Ball extends GameObject {
         circle.setRadius(sprite.getWidth() / 2);
 
         pointer = new Sprite(AssetLoader.pointer);
+        pointer.setPosition(-100,-100);
         pointer.setSize(50, 50);
         pointer.setColor(FlatColors.parseColor(Settings.TOP_POINTER_COLOR));
 
@@ -86,7 +87,7 @@ public class Ball extends GameObject {
             body.setLinearVelocity(Vector2.Zero);
             body.setAngularVelocity(0);
             body.setGravityScale(0);
-            body.setTransform(new Vector2(), 0);
+            body.setTransform(new Vector2(-500,-500), 0);
         } else {
             super.update(delta);
             sprite.setPosition((body.getPosition().x * Settings.PTM),

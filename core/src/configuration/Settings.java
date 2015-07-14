@@ -1,5 +1,7 @@
 package configuration;
 
+import helpers.FlatColors;
+
 /**
  * Created by ManuGil on 08/07/15.
  */
@@ -14,12 +16,12 @@ public class Settings {
     public static final float BALL_FORCE_SCALE = 0.07f;
     public static final boolean FADE_OUT_ON_FLOOR = true; //Set to false for testing
     public static final int NUM_OF_INITIAL_BALLS = 20;
-    public static final String TOP_POINTER_COLOR = "#e74c3c";
+    public static final String TOP_POINTER_COLOR = FlatColors.DARK_BLACK.toString();
 
     //ARROw
     public static final float ARROW_WIDTH = 100;
     public static final String ARROW_GREEN_COLOR = "55a08b";
-    public static final String ARROW_RED_COLOR = "#e74c3c";
+    public static final String ARROW_RED_COLOR = "d1584b";
 
     //COLLISION
     public static final short CATEGORY_BALL = 0x0001;  // 0000000000000001 in binary

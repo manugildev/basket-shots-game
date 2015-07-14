@@ -31,6 +31,7 @@ import screens.MenuScreen;
 import tweens.Value;
 import ui.Banner;
 import ui.Launcher;
+import ui.MenuButton;
 import ui.Text;
 
 public class GameWorld {
@@ -48,6 +49,7 @@ public class GameWorld {
     public Banner banner;
     public GameObject background, top;
     public ArrayList<Ball> balls = new ArrayList<Ball>();
+    public MenuButton homeButton;
 
     //BOX2D
     public World worldB;
@@ -97,6 +99,8 @@ public class GameWorld {
         banner = new Banner(this, 0, gameHeight / 2 - (Settings.BANNER_HEIGHT / 2), gameWidth,
                 Settings.BANNER_HEIGHT, AssetLoader.square, FlatColors.RED,
                 GameObject.Shape.RECTANGLE);
+        homeButton = new MenuButton(this,50,gameHeight-50-(AssetLoader.homeButton.getRegionHeight())/2,AssetLoader.homeButton.getRegionWidth()/2,AssetLoader.homeButton.getRegionHeight()/2,AssetLoader.homeButton,FlatColors.WHITE,
+                GameObject.Shape.RECTANGLE);
 
 
     }
@@ -113,6 +117,7 @@ public class GameWorld {
         scoreT.update(delta);
         banner.update(delta);
         top.update(delta);
+        homeButton.update(delta);
     }
 
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
@@ -132,6 +137,7 @@ public class GameWorld {
         basket.render(batch, shapeRenderer);
         scoreT.render(batch, shapeRenderer, GameRenderer.fontShader);
         banner.render(batch, shapeRenderer);
+        homeButton.render(batch,shapeRenderer);
         top.render(batch, shapeRenderer);
         if (Configuration.DEBUG) debugRenderer.render(worldB, debugMatrix);
 
