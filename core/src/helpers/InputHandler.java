@@ -21,7 +21,6 @@ public class InputHandler implements InputProcessor {
     @Override
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.R) {
-            world.ball.body.setAngularVelocity(10);
         } else if (keycode == Input.Keys.F) {
         } else if (keycode == Input.Keys.D) {
             if (Configuration.DEBUG) Configuration.DEBUG = false;

@@ -15,7 +15,7 @@ public class AndroidLauncher extends AndroidApplication implements ActionResolve
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         config.useAccelerometer = false;
         config.useCompass = false;
-            config.useImmersiveMode = true;
+        config.useImmersiveMode = true;
         initialize(new BasketballGame(this), config);
     }
 

@@ -38,6 +38,7 @@ public class Ball extends GameObject {
     private Sprite shadow;
 
     private Tween fadeOutTween;
+    public Boolean c1 = false, c2=false;
 
     public Ball(GameWorld world, float x, float y, float width, float height,
                 TextureRegion texture,
@@ -85,6 +86,7 @@ public class Ball extends GameObject {
             body.setLinearVelocity(Vector2.Zero);
             body.setAngularVelocity(0);
             body.setGravityScale(0);
+            body.setTransform(new Vector2(),0);
         } else {
             super.update(delta);
             sprite.setPosition((body.getPosition().x * Settings.PTM),
@@ -171,7 +173,7 @@ public class Ball extends GameObject {
                     ballState = BallState.IDLE;
                 }
             }).setCallbackTriggers(TweenCallback.COMPLETE).start(getManager());
-
+            world.basket.resetScoreLogic();
         }
     }
 
@@ -189,6 +191,13 @@ public class Ball extends GameObject {
 
     public boolean isLauncher() {
         return ballState == BallState.LAUNCHER;
+    }
+
+
+    public void resetScoreLogics() {
+        isScored =false;
+        c1 = false;
+        c2 = false;
     }
 
 }

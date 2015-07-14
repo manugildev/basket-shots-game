@@ -23,6 +23,7 @@ public class Basket extends GameObject {
     GameObject contact1, contact2;
     public boolean c1 = false, c2 = false;
     public Sprite net;
+    private Ball currentBall;
 
     public Basket(GameWorld world, float x, float y, float width, float height,
                   TextureRegion texture,
@@ -96,7 +97,7 @@ public class Basket extends GameObject {
         //NET
         BodyDef bodyDef4 = new BodyDef();
         bodyDef4.type = BodyDef.BodyType.StaticBody;
-        bodyDef4.position.set((sprite.getX() + 205  + sprite
+        bodyDef4.position.set((sprite.getX() + 205 + sprite
                         .getWidth() / 2) / Settings.PTM,
                 (sprite.getY() + 140 + sprite.getHeight() / 2) / Settings.PTM);
         bodyDef4.angle = (float) Math.toDegrees(80);
@@ -113,7 +114,7 @@ public class Basket extends GameObject {
 
         BodyDef bodyDef5 = new BodyDef();
         bodyDef5.type = BodyDef.BodyType.StaticBody;
-        bodyDef5.position.set((sprite.getX() + 375  + sprite
+        bodyDef5.position.set((sprite.getX() + 375 + sprite
                         .getWidth() / 2) / Settings.PTM,
                 (sprite.getY() + 140 + sprite.getHeight() / 2) / Settings.PTM);
         bodyDef5.angle = (float) Math.toDegrees(105);
@@ -141,7 +142,7 @@ public class Basket extends GameObject {
         net = new Sprite(AssetLoader.net);
         net.setSize(AssetLoader.netT.getWidth(), AssetLoader.netT.getHeight());
         net.setPosition((sprite.getX() + 180 + sprite.getWidth() / 2),
-                (sprite.getY() + 240 + sprite.getHeight() / 2) - AssetLoader.netT.getHeight());
+                (sprite.getY() + 235 + sprite.getHeight() / 2) - AssetLoader.netT.getHeight());
     }
 
     @Override
@@ -153,14 +154,18 @@ public class Basket extends GameObject {
     }
 
     private void scoreCollision() {
-        if (!world.balls.get(0).isScored) {
-            if (Intersector.overlaps(world.balls.get(0).circle, contact1.getRectangle())) {
-                c1 = true;
-            }
-            if (c1 && Intersector.overlaps(world.balls.get(0).circle, contact2.getRectangle())) {
-                c2 = true;
-                world.balls.get(0).isScored = true;
-                scoreAPoint();
+        for (int i = 0; i < world.balls.size(); i++) {
+            if (!world.balls.get(i).isScored && world.balls.get(i).isFlying()) {
+               currentBall =  world.balls.get(i);
+                if (Intersector.overlaps(currentBall.circle, contact1.getRectangle())) {
+                    currentBall.c1 = true;
+                }
+                if (currentBall.c1 && Intersector.overlaps(currentBall.circle,
+                        contact2.getRectangle())) {
+                    currentBall.c2 = true;
+                    world.balls.get(i).isScored = true;
+                    scoreAPoint();
+                }
             }
         }
     }
@@ -170,9 +175,9 @@ public class Basket extends GameObject {
     }
 
     public void resetScoreLogic() {
-        world.balls.get(0).isScored = false;
-        c1 = false;
-        c2 = false;
+        currentBall.isScored = false;
+        currentBall.c1 = false;
+        currentBall.c2 = false;
     }
 
 
@@ -186,7 +191,7 @@ public class Basket extends GameObject {
         net.draw(batch);
     }
 
-    public void renderNet(SpriteBatch batch){
+    public void renderNet(SpriteBatch batch) {
         net.draw(batch);
     }
 

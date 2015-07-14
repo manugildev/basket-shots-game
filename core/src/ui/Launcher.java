@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import configuration.Configuration;
 import configuration.Settings;
+import gameobjects.Ball;
 import gameworld.GameWorld;
 import helpers.AssetLoader;
 import helpers.FlatColors;
@@ -23,6 +24,7 @@ public class Launcher {
     public boolean isPressed = false;
     private GameWorld world;
     private Sprite sprite, arrowCap;
+    private Ball currentBall;
 
     public Launcher(GameWorld world) {
         this.world = world;
@@ -36,7 +38,7 @@ public class Launcher {
 
     public void update(float delta) {
         if (isPressed) {
-            world.balls.get(0).setToLauncher(point1);
+            currentBall.setToLauncher(point1);
             sprite.setRotation(angleBetweenTwoPoints(point1, point2) + 180);
             sprite.setSize(Settings.ARROW_WIDTH, distanceBetweenTwoPoints(point1, point2));
             sprite.setOrigin(sprite.getWidth() / 2, 0f);
@@ -72,11 +74,6 @@ public class Launcher {
                 batch.end();
                 shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
 
-                /*shapeRenderer.setColor(FlatColors.GREEN);
-                for (int i = 0; i < points.size(); i++) {
-                    shapeRenderer.circle(points.get(i).x, points.get(i).y, 3);
-                }*/
-
                 shapeRenderer.setColor(FlatColors.RED);
                 shapeRenderer.circle(point1.x, point1.y, 5);
                 shapeRenderer.circle(point2.x, point2.y, 5);
@@ -92,12 +89,13 @@ public class Launcher {
         isPressed = true;
         point1.set(x, y);
         point2.set(x, y);
-        world.basket.resetScoreLogic();
+        currentBall = world.getIdleBall();
+        currentBall.resetScoreLogics();
     }
 
     public void touchUp() {
         isPressed = false;
-        world.balls.get(0).flight(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
+        currentBall.flight(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
 
     }
 
@@ -140,8 +138,8 @@ public class Launcher {
             // Do it in n steps.
             if (step < 0) step = 0;
             final Color c = new Color(
-                    color2.r + ((dRed * step) / 30),
-                    color2.g + ((dGreen * step) / 80),
+                    color2.r + ((dRed * step) / 80),
+                    color2.g + ((dGreen * step) / 30),
                     color2.b + ((dBlue * step) / 80), 1f);
             arrowCap.setColor(c);
             sprite.setColor(c);

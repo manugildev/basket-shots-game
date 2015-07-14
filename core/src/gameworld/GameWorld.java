@@ -125,4 +125,20 @@ public class GameWorld {
         score += i;
         scoreT.setText(score + "");
     }
+
+    public Ball getIdleBall(){
+        for(int i = 0;i<balls.size();i++){
+            if(balls.get(i).isIdle()){
+                return balls.get(i);
+            }
+        }
+
+        return addBall();
+    }
+
+    private Ball addBall() {
+        balls.add(new Ball(this, gameWidth / 2, gameHeight / 2, 100, 100, AssetLoader.ball,
+                FlatColors.WHITE, GameObject.Shape.CIRCLE));
+        return balls.get(balls.size()-1);
+    }
 }
