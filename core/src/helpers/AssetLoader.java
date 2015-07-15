@@ -15,13 +15,14 @@ public class AssetLoader {
     public static TextureRegion logo, square, dot, arrowCap, arrowBot, ball, background, net, shadow, pointer;
 
     public static Texture backgroundMenuT, titleT, buttonsT;
-    public static TextureRegion backgroundMenu, title, playButton, practiceButton, scoresButton, shareButton, homeButton;
+    public static TextureRegion backgroundMenu, title, playButton, practiceButton, scoresButton, shareButton, homeButton,
+            scoreBack,timerBack;
 
     private static Preferences prefs;
-    public static BitmapFont font;
+    public static BitmapFont font, font08;
 
     public static void load1() {
-        logoTexture = new Texture("logo.png");
+        logoTexture = getAssetTexture("logo.png");
         logoTexture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         logo = new TextureRegion(logoTexture, 0, 0, logoTexture.getWidth(),
                 logoTexture.getHeight());
@@ -29,58 +30,58 @@ public class AssetLoader {
     }
 
     public static void load() {
-        square = new TextureRegion(new Texture("square.png"));
-        dotT = new Texture(Gdx.files.internal("dot.png"));
+        square = new TextureRegion(getAssetTexture("square.png"));
+        dotT = getAssetTexture("dot.png");
         dotT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         dot = new TextureRegion(dotT);
 
-        backgroundT = new Texture("background.png");
+        backgroundT = getAssetTexture("background.png");
         backgroundT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         background = new TextureRegion(backgroundT);
 
         //ARROW
-        arrowCapT = new Texture("arrowCap.png");
+        arrowCapT = getAssetTexture("arrowCap.png");
         arrowCapT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-        arrowBotT = new Texture("arrowBot.png");
+        arrowBotT = getAssetTexture("arrowBot.png");
         arrowBotT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         arrowCap = new TextureRegion(arrowCapT);
         arrowBot = new TextureRegion(arrowBotT);
 
         //BALL
-        ballT = new Texture("ball.png");
+        ballT = getAssetTexture("ball.png");
         ballT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         ball = new TextureRegion(ballT);
 
         //NET
-        netT = new Texture("net.png");
+        netT = getAssetTexture("net.png");
         netT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         net = new TextureRegion(netT);
 
         //shadow
-        shadowT = new Texture("shadow.png");
+        shadowT = getAssetTexture("shadow.png");
         shadowT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         shadow = new TextureRegion(shadowT);
 
         //pointer
-        pointerT = new Texture("pointer.png");
+        pointerT = getAssetTexture("pointer.png");
         pointerT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         pointer = new TextureRegion(pointerT);
 
 
         //MENU
         //BACKGROUND MENU
-        backgroundMenuT = new Texture("background_menu.png");
+        backgroundMenuT = getAssetTexture("background_menu.png");
         backgroundMenuT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         backgroundMenu = new TextureRegion(backgroundMenuT);
 
         //TITLE LOGO
-        titleT = new Texture("title.png");
+        titleT = getAssetTexture("title.png");
         titleT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         title = new TextureRegion(titleT);
 
         //BUTTONS
         int numOfLines = 5;
-        buttonsT = new Texture("buttons.png");
+        buttonsT = getAssetTexture("buttons.png");
         buttonsT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         playButton = new TextureRegion(buttonsT, 0, (buttonsT.getHeight() / numOfLines) * 0,
                 buttonsT.getWidth(), buttonsT.getHeight() / numOfLines);
@@ -93,6 +94,10 @@ public class AssetLoader {
         homeButton = new TextureRegion(buttonsT, 0, (buttonsT.getHeight() / numOfLines) * 4,
                 168, buttonsT.getHeight() / numOfLines);
 
+        //SCOREBACK
+        scoreBack = new TextureRegion(getAssetTexture("scoreBack.png"));
+        timerBack = new TextureRegion(getAssetTexture("timerback.png"));
+
         //FONTS
         //LOADING FONT
         Texture tfont = new Texture(Gdx.files.internal("misc/font.png"), true);
@@ -102,6 +107,22 @@ public class AssetLoader {
                 true);
         font.getData().setScale(1.5f, -1.5f);
         font.setColor(FlatColors.WHITE);
+
+        font08 = new BitmapFont(Gdx.files.internal("misc/font.fnt"), new TextureRegion(tfont),
+                true);
+        font08.getData().setScale(0.8f, -0.8f);
+        font08.setColor(FlatColors.WHITE);
+
+        //PREFERENCES
+        prefs = Gdx.app.getPreferences(Configuration.GAME_NAME);
+
+        if (!prefs.contains("highScore")) {
+            prefs.putInteger("highScore", 0);
+        }
+
+        if (!prefs.contains("games")) {
+            prefs.putInteger("games", 0);
+        }
     }
 
     public static void dispose() {
@@ -170,4 +191,7 @@ public class AssetLoader {
     }
 
 
+    public static Texture getAssetTexture(String fileName) {
+        return Assets.manager.get(fileName, Texture.class);
+    }
 }

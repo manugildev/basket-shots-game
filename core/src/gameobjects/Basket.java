@@ -156,7 +156,7 @@ public class Basket extends GameObject {
     private void scoreCollision() {
         for (int i = 0; i < world.balls.size(); i++) {
             if (!world.balls.get(i).isScored && world.balls.get(i).isFlying()) {
-               currentBall =  world.balls.get(i);
+                currentBall = world.balls.get(i);
                 if (Intersector.overlaps(currentBall.circle, contact1.getRectangle())) {
                     currentBall.c1 = true;
                 }
@@ -172,12 +172,15 @@ public class Basket extends GameObject {
 
     private void scoreAPoint() {
         world.addScore(1);
+        world.timerUI.reset();
     }
 
     public void resetScoreLogic() {
-        currentBall.isScored = false;
-        currentBall.c1 = false;
-        currentBall.c2 = false;
+        if (currentBall != null) {
+            currentBall.isScored = false;
+            currentBall.c1 = false;
+            currentBall.c2 = false;
+        }
     }
 
 

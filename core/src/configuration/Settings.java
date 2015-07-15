@@ -7,10 +7,20 @@ import helpers.FlatColors;
  */
 public class Settings {
 
+    //GENERAL
+    public static final String COLOR_LOADING_SCREEN_BACKGROUND = "#202020";
+    public static final float LOGO_SCALE = .3f;
+
     //GAMEWORLD
     public static final float WORLD_GRAVITY = -25.8f;
     public static final float PTM = 100f; //Pixels Per Metter (Don't Touch this)
     public static final float BANNER_HEIGHT = 120;
+
+    //SCORESUI
+    public static final String TEXT_COLOR ="0d4273";
+
+    //TIME
+    public static final float INITIAL_TIME = 15;
 
     //BALL
     public static final float BALL_FORCE_SCALE = 0.07f;

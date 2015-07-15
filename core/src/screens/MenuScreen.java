@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import MainGame.ActionResolver;
 import MainGame.BasketballGame;
 import gameworld.GameRenderer;
+import helpers.AssetLoader;
 import menuworld.InputHandlerMenu;
 import menuworld.MenuWorld;
 
@@ -20,6 +21,7 @@ public class MenuScreen implements Screen {
     public static float gameWidth = sW / (sH / gameHeight);
 
     public MenuScreen(BasketballGame game, ActionResolver actionresolver) {
+        AssetLoader.load1();
         this.game = game;
         Gdx.app.log("GameWidth " + gameWidth, "GameHeight " + gameHeight);
         world = new MenuWorld(game, actionresolver, gameWidth, gameHeight);

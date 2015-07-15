@@ -83,13 +83,13 @@ public class Ball extends GameObject {
 
     @Override
     public void update(float delta) {
+        super.update(delta);
         if (isIdle()) {
             body.setLinearVelocity(Vector2.Zero);
             body.setAngularVelocity(0);
             body.setGravityScale(0);
             body.setTransform(new Vector2(-500,-500), 0);
         } else {
-            super.update(delta);
             sprite.setPosition((body.getPosition().x * Settings.PTM),
                     (body.getPosition().y * Settings.PTM));
             circle.setPosition(body.getWorldPoint(body.getLocalCenter()).x * Settings.PTM,
@@ -172,7 +172,7 @@ public class Ball extends GameObject {
                 fadeOut(1.3f, 0.1f);
             ballState = BallState.FLOOR;
             Value timer = new Value();
-            fadeOutTween = Tween.to(timer, -1, 1.4f).target(1).setCallback(new TweenCallback() {
+            Tween.to(timer, -1, 1.4f).target(1).setCallback(new TweenCallback() {
                 @Override
                 public void onEvent(int type, BaseTween<?> source) {
                     ballState = BallState.IDLE;

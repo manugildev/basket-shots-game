@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Align;
 
 import java.util.ArrayList;
 
@@ -27,12 +26,14 @@ import gameobjects.Floor;
 import gameobjects.GameObject;
 import helpers.AssetLoader;
 import helpers.FlatColors;
+import screens.LoadingScreen;
 import screens.MenuScreen;
 import tweens.Value;
 import ui.Banner;
 import ui.Launcher;
 import ui.MenuButton;
-import ui.Text;
+import ui.ScoresUI;
+import ui.TimeUI;
 
 public class GameWorld {
     public float gameWidth, gameHeight;
@@ -45,11 +46,12 @@ public class GameWorld {
     public Ball ball;
     public Basket basket;
     public Launcher launcher;
-    public Text scoreT;
     public Banner banner;
     public GameObject background, top;
     public ArrayList<Ball> balls = new ArrayList<Ball>();
     public MenuButton homeButton;
+    public ScoresUI scoreUI;
+    public TimeUI timerUI;
 
     //BOX2D
     public World worldB;
@@ -92,14 +94,26 @@ public class GameWorld {
                 FlatColors.GREY,
                 GameObject.Shape.RECTANGLE);
         launcher = new Launcher(this);
-        scoreT = new Text(this, 700, gameHeight - 150, gameWidth - 1400, 100, AssetLoader.square,
-                Color.WHITE,
-                "0", AssetLoader.font, FlatColors.BLACK, 10,
-                Align.center);
+
         banner = new Banner(this, 0, gameHeight / 2 - (Settings.BANNER_HEIGHT / 2), gameWidth,
-                Settings.BANNER_HEIGHT, AssetLoader.square, FlatColors.RED,
+                Settings.BANNER_HEIGHT, AssetLoader.square, Color.BLACK,
                 GameObject.Shape.RECTANGLE);
-        homeButton = new MenuButton(this,50,gameHeight-50-(AssetLoader.homeButton.getRegionHeight())/2,AssetLoader.homeButton.getRegionWidth()/2,AssetLoader.homeButton.getRegionHeight()/2,AssetLoader.homeButton,FlatColors.WHITE,
+        homeButton = new MenuButton(this, 50,
+                gameHeight - 50 - (AssetLoader.homeButton.getRegionHeight()) / 2,
+                AssetLoader.homeButton.getRegionWidth() / 2,
+                AssetLoader.homeButton.getRegionHeight() / 2, AssetLoader.homeButton,
+                FlatColors.WHITE,
+                GameObject.Shape.RECTANGLE);
+        scoreUI = new ScoresUI(this, gameWidth - 630,
+                gameHeight - 45 - AssetLoader.scoreBack.getRegionHeight(),
+                AssetLoader.scoreBack.getRegionWidth(), AssetLoader.scoreBack.getRegionHeight(),
+                AssetLoader.scoreBack, FlatColors.WHITE,
+                GameObject.Shape.RECTANGLE);
+
+        timerUI = new TimeUI(this, gameWidth / 2 - AssetLoader.timerBack.getRegionWidth() / 2,
+                gameHeight - 45 - AssetLoader.timerBack.getRegionHeight(),
+                AssetLoader.timerBack.getRegionWidth(), AssetLoader.timerBack.getRegionHeight(),
+                AssetLoader.timerBack, FlatColors.WHITE,
                 GameObject.Shape.RECTANGLE);
 
 
@@ -114,10 +128,11 @@ public class GameWorld {
         }
         basket.update(delta);
         launcher.update(delta);
-        scoreT.update(delta);
         banner.update(delta);
         top.update(delta);
         homeButton.update(delta);
+        timerUI.update(delta);
+        scoreUI.update(delta);
     }
 
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
@@ -135,17 +150,19 @@ public class GameWorld {
             balls.get(i).render(batch, shapeRenderer);
         }
         basket.render(batch, shapeRenderer);
-        scoreT.render(batch, shapeRenderer, GameRenderer.fontShader);
         banner.render(batch, shapeRenderer);
-        homeButton.render(batch,shapeRenderer);
+        homeButton.render(batch, shapeRenderer);
+        scoreUI.render(batch, shapeRenderer);
+        timerUI.render(batch, shapeRenderer);
         top.render(batch, shapeRenderer);
+
         if (Configuration.DEBUG) debugRenderer.render(worldB, debugMatrix);
 
     }
 
     public void addScore(int i) {
         score += i;
-        scoreT.setText(score + "");
+        scoreUI.setScoreText(score);
     }
 
     public Ball getIdleBall() {
@@ -159,6 +176,11 @@ public class GameWorld {
     }
 
     private Ball addBall() {
+        for (int i = 0; i < balls.size(); i++) {
+            if (balls.size() > Settings.NUM_OF_INITIAL_BALLS && balls.get(i).isIdle()) {
+                worldB.destroyBody(balls.get(i).body);
+            }
+        }
         balls.add(new Ball(this, gameWidth / 2, gameHeight / 2, 100, 100, AssetLoader.ball,
                 FlatColors.WHITE, GameObject.Shape.CIRCLE));
         return balls.get(balls.size() - 1);
@@ -178,5 +200,9 @@ public class GameWorld {
 
     private void finishEffects() {
         top.fadeIn(0.5f, 0f);
+    }
+
+    public void goToLoadingScreen() {
+        game.setScreen(new LoadingScreen(game, actionResolver));
     }
 }

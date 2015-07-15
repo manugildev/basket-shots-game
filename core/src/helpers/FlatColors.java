@@ -6,6 +6,7 @@ public class FlatColors {
 
     public static final Color RED = parseColor("#e74c3c", 1f);
     public static final Color DARK_RED = parseColor("#c0392b", 1f);
+    public static final Color EVEN_DARK_RED =parseColor("89211e") ;
 
     public static final Color GREEN = parseColor("#2ecc71", 1f);
     public static final Color DARK_GREEN = parseColor("#27ae60", 1f);
@@ -37,6 +38,7 @@ public class FlatColors {
 
     public static final Color SKY_BLUE = parseColor("#242d58", 1f);
     public static final Color DARK_SKY_BLUE = parseColor("#181f3f", 1f);
+    public static final Color LOGO_GREEN = parseColor("00A386");
 
     public static Color parseColor(String hex, float alpha) {
         String hex1 = hex;

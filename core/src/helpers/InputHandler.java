@@ -33,6 +33,9 @@ public class InputHandler implements InputProcessor {
             world.banner.start();
         } else if (keycode == Input.Keys.BACK) {
             world.goToMenu();
+        }else if (keycode == Input.Keys.L) {
+            world.goToLoadingScreen();
+
         }
         return false;
     }
