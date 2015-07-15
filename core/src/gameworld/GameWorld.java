@@ -53,6 +53,11 @@ public class GameWorld {
     public ScoresUI scoreUI;
     public TimeUI timerUI;
 
+    public enum STATE {PRACTICE, GAME}
+
+    ;
+    public STATE state;
+
     //BOX2D
     public World worldB;
     Body body;
@@ -62,11 +67,12 @@ public class GameWorld {
 
 
     public GameWorld(BasketballGame game, ActionResolver actionResolver, float gameWidth,
-                     float gameHeight) {
+                     float gameHeight, STATE state) {
         this.game = game;
         this.gameWidth = gameWidth;
         this.gameHeight = gameHeight;
         this.actionResolver = actionResolver;
+        this.state = state;
         start();
     }
 
@@ -115,6 +121,8 @@ public class GameWorld {
                 AssetLoader.timerBack.getRegionWidth(), AssetLoader.timerBack.getRegionHeight(),
                 AssetLoader.timerBack, FlatColors.WHITE,
                 GameObject.Shape.RECTANGLE);
+        if (state == STATE.GAME)
+            timerUI.startTimer(Settings.INITIAL_TIME, 2f);
 
 
     }
@@ -153,7 +161,8 @@ public class GameWorld {
         banner.render(batch, shapeRenderer);
         homeButton.render(batch, shapeRenderer);
         scoreUI.render(batch, shapeRenderer);
-        timerUI.render(batch, shapeRenderer);
+        if (state == STATE.GAME)
+            timerUI.render(batch, shapeRenderer);
         top.render(batch, shapeRenderer);
 
         if (Configuration.DEBUG) debugRenderer.render(worldB, debugMatrix);

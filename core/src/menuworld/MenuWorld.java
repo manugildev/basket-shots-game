@@ -31,7 +31,7 @@ public class MenuWorld extends GameWorld {
 
     public MenuWorld(BasketballGame game, ActionResolver actionResolver, float gameWidth,
                      float gameHeight) {
-        super(game, actionResolver, gameWidth, gameHeight);
+        super(game, actionResolver, gameWidth, gameHeight,null);
         this.actionResolver = actionResolver;
         top = new GameObject(this, 0, 0, gameWidth, gameHeight, AssetLoader.square, Color.BLACK,
                 GameObject.Shape.RECTANGLE);
@@ -98,7 +98,8 @@ public class MenuWorld extends GameWorld {
         Tween.to(timer, -1, 1f).target(0).setCallback(new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
-                MenuScreen.game.setScreen(new GameScreen(MenuScreen.game, actionResolver));
+                MenuScreen.game
+                        .setScreen(new GameScreen(MenuScreen.game, actionResolver, STATE.GAME));
             }
         }).setCallbackTriggers(TweenCallback.COMPLETE).start(title.getManager());
 
@@ -115,6 +116,6 @@ public class MenuWorld extends GameWorld {
     }
 
     public void goToPracticeMode() {
-        MenuScreen.game.setScreen(new GameScreen(MenuScreen.game, actionResolver));
+        MenuScreen.game.setScreen(new GameScreen(MenuScreen.game, actionResolver, STATE.PRACTICE));
     }
 }

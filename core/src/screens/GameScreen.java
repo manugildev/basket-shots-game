@@ -18,10 +18,10 @@ public class GameScreen implements Screen {
     public static float gameHeight = 1080;
     public static float gameWidth = sW / (sH / gameHeight);
 
-    public GameScreen(BasketballGame game, ActionResolver actionResolver) {
+    public GameScreen(BasketballGame game, ActionResolver actionResolver, GameWorld.STATE state) {
         this.game = game;
         Gdx.app.log("GameWidth " + gameWidth, "GameHeight " + gameHeight);
-        world = new GameWorld(game, actionResolver, gameWidth, gameHeight);
+        world = new GameWorld(game, actionResolver, gameWidth, gameHeight, state);
         Gdx.input.setInputProcessor(new InputHandler(world, sW / gameWidth, sH
                 / gameHeight));
         renderer = new GameRenderer(world);

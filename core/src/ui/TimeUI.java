@@ -21,11 +21,13 @@ import helpers.FlatColors;
 import tweens.Value;
 
 public class TimeUI extends GameObject {
+
     public Text timeText;
     TweenCallback cb;
     Tween timerTween;
     Value timer = new Value();
     TweenManager manager;
+    float everyTime;
 
     public TimeUI(GameWorld world, float x, float y, float width, float height,
                   TextureRegion texture,
@@ -34,15 +36,14 @@ public class TimeUI extends GameObject {
         timeText = new Text(world, x, y, width, height, AssetLoader.square, Color.WHITE,
                 "Time: 0", AssetLoader.font08, FlatColors.parseColor(Settings.TEXT_COLOR), 22,
                 Align.center);
+        everyTime = Settings.INITIAL_TIME;
         manager = new TweenManager();
         timer.setValue(0);
-        startTimer(Settings.INITIAL_TIME, 2f);
-
         cb = new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
                 timerTween.kill();
-                startTimer(Settings.INITIAL_TIME, 0f);
+                startTimer(everyTime-=Settings.REDUCTION_EVERY_POINT, 0.5f);
             }
         };
 

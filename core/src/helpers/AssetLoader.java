@@ -95,7 +95,7 @@ public class AssetLoader {
                 168, buttonsT.getHeight() / numOfLines);
 
         //SCOREBACK
-        scoreBack = new TextureRegion(getAssetTexture("scoreBack.png"));
+        scoreBack = new TextureRegion(getAssetTexture("scoreback.png"));
         timerBack = new TextureRegion(getAssetTexture("timerback.png"));
 
         //FONTS

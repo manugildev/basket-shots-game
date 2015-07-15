@@ -21,6 +21,7 @@ public class Settings {
 
     //TIME
     public static final float INITIAL_TIME = 15;
+    public static final float REDUCTION_EVERY_POINT = 0.5f;
 
     //BALL
     public static final float BALL_FORCE_SCALE = 0.07f;

@@ -19,7 +19,7 @@ public class Assets {
         manager.load("logo.png", Texture.class);
         manager.load("net.png", Texture.class);
         manager.load("pointer.png", Texture.class);
-        manager.load("scoreBack.png", Texture.class);
+        manager.load("scoreback.png", Texture.class);
         manager.load("shadow.png", Texture.class);
         manager.load("square.png", Texture.class);
         manager.load("timerback.png", Texture.class);
