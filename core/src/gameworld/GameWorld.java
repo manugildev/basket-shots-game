@@ -28,6 +28,7 @@ import helpers.AssetLoader;
 import helpers.FlatColors;
 import screens.LoadingScreen;
 import screens.MenuScreen;
+import tweens.SpriteAccessor;
 import tweens.Value;
 import ui.Banner;
 import ui.Launcher;
@@ -38,7 +39,7 @@ import ui.TimeUI;
 public class GameWorld {
     public float gameWidth, gameHeight;
     public int score = 0;
-    private BasketballGame game;
+    public BasketballGame game;
     public ActionResolver actionResolver;
 
     //GAMEOBJECTS
@@ -52,11 +53,16 @@ public class GameWorld {
     public MenuButton homeButton;
     public ScoresUI scoreUI;
     public TimeUI timerUI;
+    public GameObject tutorial;
+
 
     public enum STATE {PRACTICE, GAME}
 
-    ;
     public STATE state;
+
+    public enum GameState {GAMEOVER, RUNNING}
+
+    public GameState gameState;
 
     //BOX2D
     public World worldB;
@@ -79,7 +85,7 @@ public class GameWorld {
     private void start() {
         worldB = new World(new Vector2(0, Settings.WORLD_GRAVITY), true);
         debugRenderer = new Box2DDebugRenderer();
-
+        gameState = GameState.RUNNING;
         //GAMEOBJECTS
         background = new GameObject(this, 0, 0, gameWidth, gameHeight, AssetLoader.background,
                 Color.WHITE,
@@ -104,6 +110,7 @@ public class GameWorld {
         banner = new Banner(this, 0, gameHeight / 2 - (Settings.BANNER_HEIGHT / 2), gameWidth,
                 Settings.BANNER_HEIGHT, AssetLoader.square, Color.BLACK,
                 GameObject.Shape.RECTANGLE);
+        banner.startAndFinish();
         homeButton = new MenuButton(this, 50,
                 gameHeight - 50 - (AssetLoader.homeButton.getRegionHeight()) / 2,
                 AssetLoader.homeButton.getRegionWidth() / 2,
@@ -121,6 +128,13 @@ public class GameWorld {
                 AssetLoader.timerBack.getRegionWidth(), AssetLoader.timerBack.getRegionHeight(),
                 AssetLoader.timerBack, FlatColors.WHITE,
                 GameObject.Shape.RECTANGLE);
+
+        tutorial = new GameObject(this, gameWidth - 50 - AssetLoader.tutorial.getRegionWidth(),
+                floor.rectangle.height + 20, AssetLoader.tutorial.getRegionWidth(),
+                AssetLoader.tutorial.getRegionHeight(), AssetLoader.tutorial, FlatColors.WHITE,
+                GameObject.Shape.RECTANGLE);
+        tutorial.getSprite().setAlpha(0);
+
         if (state == STATE.GAME)
             timerUI.startTimer(Settings.INITIAL_TIME, 2f);
 
@@ -141,6 +155,7 @@ public class GameWorld {
         homeButton.update(delta);
         timerUI.update(delta);
         scoreUI.update(delta);
+        tutorial.update(delta);
     }
 
     public void render(SpriteBatch batch, ShapeRenderer shapeRenderer) {
@@ -158,11 +173,11 @@ public class GameWorld {
             balls.get(i).render(batch, shapeRenderer);
         }
         basket.render(batch, shapeRenderer);
+        tutorial.render(batch, shapeRenderer);
         banner.render(batch, shapeRenderer);
         homeButton.render(batch, shapeRenderer);
         scoreUI.render(batch, shapeRenderer);
-        if (state == STATE.GAME)
-            timerUI.render(batch, shapeRenderer);
+        if (state == STATE.GAME) timerUI.render(batch, shapeRenderer);
         top.render(batch, shapeRenderer);
 
         if (Configuration.DEBUG) debugRenderer.render(worldB, debugMatrix);
@@ -172,6 +187,9 @@ public class GameWorld {
     public void addScore(int i) {
         score += i;
         scoreUI.setScoreText(score);
+        if (score > AssetLoader.getHighScore()) {
+            scoreUI.setBestText(score);
+        }
     }
 
     public Ball getIdleBall() {
@@ -207,11 +225,60 @@ public class GameWorld {
         }).setCallbackTriggers(TweenCallback.COMPLETE).start(background.getManager());
     }
 
+    public void goToMenuFromGameover() {
+        banner.finish(.5f);
+        finishEffects();
+        Value timer = new Value();
+        timer.setValue(0);
+        Tween.to(timer, -1, .5f).target(1).setCallback(new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                game.setScreen(new MenuScreen(game, actionResolver));
+            }
+        }).setCallbackTriggers(TweenCallback.COMPLETE).start(background.getManager());
+    }
+
+
+    public void finish() {
+        if (state == STATE.GAME)
+            saveScoreLogic();
+        Value timer = new Value();
+        Tween.to(timer, -1, 1f).target(1).setCallback(new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+                gameState = GameState.GAMEOVER;
+                if (Math.random() < Configuration.AD_FREQUENCY) {
+                    actionResolver.showOrLoadInterstital();
+                }
+            }
+        }).setCallbackTriggers(TweenCallback.COMPLETE).start(background.getManager());
+        banner.setText(Configuration.SCORE_TEXT + score);
+        banner.start();
+
+        timerUI.manager.killAll();
+        timerUI.timer.setValue(0);
+    }
+
+    private void saveScoreLogic() {
+        AssetLoader.addGamesPlayed();
+        int gamesPlayed = AssetLoader.getGamesPlayed();
+        actionResolver.submitScore(score);
+        actionResolver.submitGamesPlayed(gamesPlayed);
+        if (score > AssetLoader.getHighScore()) {
+            AssetLoader.setHighScore(score);
+        }
+    }
+
     private void finishEffects() {
         top.fadeIn(0.5f, 0f);
     }
 
     public void goToLoadingScreen() {
         game.setScreen(new LoadingScreen(game, actionResolver));
+    }
+
+    public void tutorialEffect() {
+        Tween.to(tutorial.sprite, SpriteAccessor.ALPHA, .4f).target(1).repeatYoyo(1, .1f)
+                .start(tutorial.getManager());
     }
 }

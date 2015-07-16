@@ -16,7 +16,7 @@ public class AssetLoader {
 
     public static Texture backgroundMenuT, titleT, buttonsT;
     public static TextureRegion backgroundMenu, title, playButton, practiceButton, scoresButton, shareButton, homeButton,
-            scoreBack,timerBack;
+            scoreBack, timerBack, tutorial;
 
     private static Preferences prefs;
     public static BitmapFont font, font08;
@@ -97,6 +97,7 @@ public class AssetLoader {
         //SCOREBACK
         scoreBack = new TextureRegion(getAssetTexture("scoreback.png"));
         timerBack = new TextureRegion(getAssetTexture("timerback.png"));
+        tutorial = new TextureRegion(getAssetTexture("tutorial.png"));
 
         //FONTS
         //LOADING FONT

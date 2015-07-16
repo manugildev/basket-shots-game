@@ -155,7 +155,8 @@ public class Basket extends GameObject {
 
     private void scoreCollision() {
         for (int i = 0; i < world.balls.size(); i++) {
-            if (!world.balls.get(i).isScored && world.balls.get(i).isFlying()) {
+            if (!world.balls.get(i).isScored && world.balls.get(i)
+                    .isFlying() && world.gameState == GameWorld.GameState.RUNNING) {
                 currentBall = world.balls.get(i);
                 if (Intersector.overlaps(currentBall.circle, contact1.getRectangle())) {
                     currentBall.c1 = true;

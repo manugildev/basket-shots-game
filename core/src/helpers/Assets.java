@@ -24,6 +24,7 @@ public class Assets {
         manager.load("square.png", Texture.class);
         manager.load("timerback.png", Texture.class);
         manager.load("title.png", Texture.class);
+        manager.load("tutorial.png", Texture.class);
     }
 
     public static void dispose() {

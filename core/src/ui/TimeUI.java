@@ -25,11 +25,12 @@ public class TimeUI extends GameObject {
     public Text timeText;
     TweenCallback cb;
     Tween timerTween;
-    Value timer = new Value();
-    TweenManager manager;
+    public Value timer = new Value();
+    public TweenManager manager;
     float everyTime;
+    private TweenCallback cbFinish;
 
-    public TimeUI(GameWorld world, float x, float y, float width, float height,
+    public TimeUI(final GameWorld world, float x, float y, float width, float height,
                   TextureRegion texture,
                   Color color, Shape shape) {
         super(world, x, y, width, height, texture, color, shape);
@@ -42,8 +43,16 @@ public class TimeUI extends GameObject {
         cb = new TweenCallback() {
             @Override
             public void onEvent(int type, BaseTween<?> source) {
+                timerTween.pause();
                 timerTween.kill();
-                startTimer(everyTime-=Settings.REDUCTION_EVERY_POINT, 0.5f);
+                manager.killAll();
+                startTimer(everyTime -= Settings.REDUCTION_EVERY_POINT, 0.5f);
+            }
+        };
+        cbFinish = new TweenCallback() {
+            @Override
+            public void onEvent(int type, BaseTween<?> source) {
+               world.finish();
             }
         };
 
@@ -73,13 +82,14 @@ public class TimeUI extends GameObject {
         timerTween = null;
         timer = new Value();
         timer.setValue(time);
-        timerTween = Tween.to(timer, -1, time).delay(delay).target(0).ease(
-                TweenEquations.easeNone).start(manager);
+        timerTween = Tween.to(timer, -1, time).delay(delay).setCallback(cbFinish)
+                .setCallbackTriggers(TweenCallback.COMPLETE).target(0).ease(
+                        TweenEquations.easeNone).start(manager);
     }
 
     public void reset() {
         timerTween = null;
-        timerTween = Tween.to(timer, -1, .3f).target(Settings.INITIAL_TIME).ease(
+        timerTween = Tween.to(timer, -1, .3f).target(everyTime).ease(
                 TweenEquations.easeInOutSine).setCallback(cb)
                 .setCallbackTriggers(TweenCallback.COMPLETE).start(getManager());
     }

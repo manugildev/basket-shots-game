@@ -90,12 +90,14 @@ public class Launcher {
     }
 
     public void touchDown(int x, int y) {
-        if (rect.contains(x, y)) {
+        if (world.tutorial.rectangle.contains(x, y)) {
             isPressed = true;
             point1.set(x, y);
             point2.set(x, y);
             currentBall = world.getIdleBall();
             currentBall.resetScoreLogics();
+        }else{
+            world.tutorialEffect();
         }
     }
 

@@ -2,8 +2,17 @@ package configuration;
 
 public class Configuration {
     public static final String GAME_NAME = "Basket Shots";
-    public static boolean FPS_COUNTER = true;
+    public static boolean FPS_COUNTER = false;
     public static boolean DEBUG = false;
+
+    //ADMOB IDS
+    public static String ADMOB_INTERSTITIAL_ID = "ca-app-pub-6147578034437241/3076406217";
+    public static String ADMOB_BANNER_ID = "ca-app-pub-6147578034437241/4553139411";
+    public static float AD_FREQUENCY = .6f; //number between 0 and 1
+
+    //LEADERBOARDS IDS
+    public static final String LEADERBOARD_HIGHSCORE = "CgkI_Pbk96ESEAIQAQ";
+    public static final String LEADERBOARD_GAMESPLAYED = "CgkI_Pbk96ESEAIQAg";
 
     public static final String SHARE_MESSAGE = "Can you beat me at " + GAME_NAME + "?";
     public static final String SCORE_TEXT = "Score: ";

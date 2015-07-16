@@ -30,7 +30,6 @@ public class Banner extends GameObject {
                 "GO!", AssetLoader.font, FlatColors.WHITE, 10,
                 Align.center);
         sprite.setAlpha(0.8f);
-        start();
     }
 
     private void reset() {
@@ -55,6 +54,12 @@ public class Banner extends GameObject {
     }
 
     public void start() {
+        sprite.setScale(1, 0);
+        Tween.to(sprite, SpriteAccessor.SCALEY, .5f).target(1).start(getManager());
+        fadeInFromTo(0, .8f, .5f, 0f);
+        text.effectX(-world.gameWidth, 0, .5f, .5f);
+    }
+    public void startAndFinish(){
         sprite.setScale(1, 0);
         Tween.to(sprite, SpriteAccessor.SCALEY, .5f).target(1).start(getManager());
         fadeInFromTo(0, .8f, .5f, 0f);

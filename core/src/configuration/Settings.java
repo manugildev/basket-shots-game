@@ -2,9 +2,6 @@ package configuration;
 
 import helpers.FlatColors;
 
-/**
- * Created by ManuGil on 08/07/15.
- */
 public class Settings {
 
     //GENERAL

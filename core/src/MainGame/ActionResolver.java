@@ -25,12 +25,7 @@ public interface ActionResolver {
 
     public void viewAd(boolean view);
 
-    public void iapClick();
-
     public void toast(String string);
 
-    public void viewVideoAd();
-
-    public void checkVideoAd();
 
 }

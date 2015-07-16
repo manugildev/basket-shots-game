@@ -33,7 +33,7 @@ public class InputHandler implements InputProcessor {
             world.banner.start();
         } else if (keycode == Input.Keys.BACK) {
             world.goToMenu();
-        }else if (keycode == Input.Keys.L) {
+        } else if (keycode == Input.Keys.L) {
             world.goToLoadingScreen();
 
         }
@@ -55,7 +55,9 @@ public class InputHandler implements InputProcessor {
         screenX = scaleX(screenX);
         screenY = scaleY(screenY);
         world.homeButton.isTouchDown(screenX, screenY);
-        world.launcher.touchDown(screenX, screenY);
+        if (world.gameState == GameWorld.GameState.RUNNING)
+            world.launcher.touchDown(screenX, screenY);
+        else world.goToMenuFromGameover();
         return false;
     }
 

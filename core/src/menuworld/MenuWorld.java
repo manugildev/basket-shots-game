@@ -43,8 +43,6 @@ public class MenuWorld extends GameWorld {
                 AssetLoader.title.getRegionWidth(), AssetLoader.title.getRegionHeight(),
                 AssetLoader.title,
                 FlatColors.WHITE, GameObject.Shape.RECTANGLE);
-
-
         buttonTextures.add(AssetLoader.playButton);
         buttonTextures.add(AssetLoader.practiceButton);
         buttonTextures.add(AssetLoader.scoresButton);
