@@ -154,11 +154,7 @@ public class AssetLoader {
     }
 
     public static void dispose() {
-        dotT.dispose();
-        logoTexture.dispose();
-        ballT.dispose();
-        arrowCapT.dispose();
-        arrowBotT.dispose();
+
     }
 
     public static void setHighScore(int val) {

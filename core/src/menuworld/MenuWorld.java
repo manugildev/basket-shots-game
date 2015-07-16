@@ -71,11 +71,11 @@ public class MenuWorld extends GameWorld {
 
         musicButton = new MusicButton(
                 gameWidth / 2 - (AssetLoader.musicButton.getRegionWidth() / 2) - 20,
-                scoreUI.getRectangle().y, AssetLoader.musicButton.getRegionWidth() / 2,
+                scoreUI.getRectangle().y-10, AssetLoader.musicButton.getRegionWidth() / 2,
                 AssetLoader.noMusicButton.getRegionHeight() / 2, AssetLoader.noMusicButton,
                 AssetLoader.musicButton, Color.WHITE);
 
-        soundButton = new SoundButton(gameWidth / 2 + 20, scoreUI.getRectangle().y,
+        soundButton = new SoundButton(gameWidth / 2 + 20, scoreUI.getRectangle().y-20,
                 AssetLoader.soundButton.getRegionWidth() / 2,
                 AssetLoader.soundButton.getRegionHeight() / 2, AssetLoader.nosoundButton,
                 AssetLoader.soundButton, Color.WHITE);
@@ -106,9 +106,9 @@ public class MenuWorld extends GameWorld {
         }
         scoreUI.update(delta);
         musicButton.update(delta);
-        musicButton.sprite.setY(scoreUI.getRectangle().y);
+        musicButton.sprite.setY(scoreUI.getRectangle().y-10);
         soundButton.update(delta);
-        soundButton.sprite.setY(scoreUI.getRectangle().y);
+        soundButton.sprite.setY(scoreUI.getRectangle().y-10);
 
     }
 

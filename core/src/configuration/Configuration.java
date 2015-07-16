@@ -13,8 +13,8 @@ public class Configuration {
     public static float AD_FREQUENCY = .6f; //number between 0 and 1
 
     //LEADERBOARDS IDS
-    public static final String LEADERBOARD_HIGHSCORE = "CgkI_Pbk96ESEAIQAQ";
-    public static final String LEADERBOARD_GAMESPLAYED = "CgkI_Pbk96ESEAIQAg";
+    public static final String LEADERBOARD_HIGHSCORE = "CgkI9u67gIESEAIQBg";
+    public static final String LEADERBOARD_GAMESPLAYED = "CgkI9u67gIESEAIQBw";
 
     public static final String SHARE_MESSAGE = "Can you beat me at " + GAME_NAME + "?";
     public static final String SCORE_TEXT = "Score: ";

@@ -51,8 +51,8 @@ public class LoadingScreen implements Screen {
         logo = new Sprite(new Texture("logo.png"));
         float scale = desiredWidth / logo.getWidth();
         logo.setSize(logo.getWidth() * scale, logo.getHeight() * scale);
-        logo.setPosition(Gdx.graphics.getWidth() / 2 - (logo.getWidth() / 2)+20,
-                Gdx.graphics.getHeight() / 2 - (logo.getHeight() / 2));
+        logo.setPosition(Gdx.graphics.getWidth() / 2 - (logo.getWidth() / 2),
+                Gdx.graphics.getHeight() / 2 - (logo.getHeight() / 2)+20);
 
         progressBar = new Sprite(background.getTexture());
         progressBar.setPosition(0, logo.getY()-60);
