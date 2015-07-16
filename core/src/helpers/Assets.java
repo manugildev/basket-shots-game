@@ -1,6 +1,8 @@
 package helpers;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 
 public class Assets {
@@ -8,6 +10,8 @@ public class Assets {
     public static final AssetManager manager = new AssetManager();
 
     public static void load() {
+
+        //Textures
         manager.load("arrow.png", Texture.class);
         manager.load("arrowBot.png", Texture.class);
         manager.load("arrowCap.png", Texture.class);
@@ -17,6 +21,8 @@ public class Assets {
         manager.load("buttons.png", Texture.class);
         manager.load("dot.png", Texture.class);
         manager.load("logo.png", Texture.class);
+        manager.load("musicbuttons.png", Texture.class);
+        manager.load("soundbuttons.png", Texture.class);
         manager.load("net.png", Texture.class);
         manager.load("pointer.png", Texture.class);
         manager.load("scoreback.png", Texture.class);
@@ -25,6 +31,15 @@ public class Assets {
         manager.load("timerback.png", Texture.class);
         manager.load("title.png", Texture.class);
         manager.load("tutorial.png", Texture.class);
+
+        //Sounds
+        manager.load("sounds/net.wav", Sound.class);
+        manager.load("sounds/swoosh.wav", Sound.class);
+        manager.load("sounds/buzzer.wav", Sound.class);
+        manager.load("sounds/click.wav", Sound.class);
+
+        //Music
+        manager.load("sounds/music.wav", Music.class);
     }
 
     public static void dispose() {

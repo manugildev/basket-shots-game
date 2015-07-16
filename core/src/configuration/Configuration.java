@@ -2,8 +2,10 @@ package configuration;
 
 public class Configuration {
     public static final String GAME_NAME = "Basket Shots";
+
     public static boolean FPS_COUNTER = false;
     public static boolean DEBUG = false;
+    public static final float MUSIC_VOLUME = .8f;
 
     //ADMOB IDS
     public static String ADMOB_INTERSTITIAL_ID = "ca-app-pub-6147578034437241/3076406217";

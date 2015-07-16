@@ -43,14 +43,14 @@ public class SoundButton {
         this.buttonDown = buttonDown;
         this.color = color;
 
-        bounds = new Rectangle(x+(width/2), y+(height/2), width, height);
+        bounds = new Rectangle(x + (width / 2), y + (height / 2), width, height);
         sprite = new Sprite(buttonUp);
         sprite.setPosition(x, y);
         sprite.setSize(width, height);
         Tween.registerAccessor(Value.class, new ValueAccessor());
         manager = new TweenManager();
 
-        if (AssetLoader.getVolume()) {
+        if (AssetLoader.getSounds()) {
             isPressed = true;
         }
 
@@ -62,7 +62,7 @@ public class SoundButton {
     }
 
     public void draw(SpriteBatch batcher) {
-        bounds.set(sprite.getX(),sprite.getY(),sprite.getWidth(),sprite.getHeight());
+        bounds.set(sprite.getX(), sprite.getY(), sprite.getWidth(), sprite.getHeight());
         batcher.setColor(color);
         if (isPressed) {
             sprite.setRegion(buttonDown);
@@ -76,19 +76,10 @@ public class SoundButton {
         if (bounds.contains(screenX, screenY)) {
             if (isPressed) {
                 setIsPressed(false);
-                if (!AssetLoader.music.isPlaying()) {
-                    AssetLoader.music.setLooping(true);
-                    AssetLoader.music.play();
-                    AssetLoader.setVolume(true);
-                }
-
+                AssetLoader.setSounds(true);
             } else {
                 setIsPressed(true);
-                if (AssetLoader.music.isPlaying()) {
-                    AssetLoader.music.pause();
-                    AssetLoader.setVolume(false);
-                }
-
+                AssetLoader.setSounds(false);
             }
 
         }
@@ -97,14 +88,10 @@ public class SoundButton {
     }
 
     public boolean isTouchUp(int screenX, int screenY) {
-
-        // It only counts as a touchUp if the button is in a pressed state.
         if (bounds.contains(screenX, screenY) && isPressed) {
             isPressed = false;
             return true;
         }
-
-        // Whenever a finger is released, we will cancel any presses.
         isPressed = false;
         return false;
     }

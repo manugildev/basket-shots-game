@@ -22,9 +22,10 @@ public class ScoresUI extends GameObject {
                     Color color, Shape shape) {
         super(world, x, y, width, height, texture, color, shape);
         scoreText = new Text(world, x + 30, y, width, height, AssetLoader.square, Color.WHITE,
-                "Score: 0", AssetLoader.font08,
+                "", AssetLoader.font08,
                 FlatColors.parseColor(Settings.TEXT_COLOR), 22, Align.left);
-        bestText = new Text(world, x, y, world.gameWidth-x-30, height, AssetLoader.square, Color.WHITE,
+        bestText = new Text(world, x, y, world.gameWidth - x - 30, height, AssetLoader.square,
+                Color.WHITE,
                 Configuration.BEST_TEXT + AssetLoader.getHighScore(), AssetLoader.font08,
                 FlatColors.parseColor(Settings.TEXT_COLOR), 22, Align.right);
     }
@@ -32,6 +33,7 @@ public class ScoresUI extends GameObject {
     @Override
     public void update(float delta) {
         super.update(delta);
+        scoreText.setPosition(getSprite().getX() + 30, getSprite().getY());
         scoreText.update(delta);
         bestText.update(delta);
     }
@@ -43,10 +45,18 @@ public class ScoresUI extends GameObject {
         bestText.render(batch, shapeRenderer, GameRenderer.fontShader);
     }
 
-    public void setScoreText(int score){
-        scoreText.setText(Configuration.SCORE_TEXT + score);
+    public void renderMenu(SpriteBatch batch, ShapeRenderer shapeRenderer) {
+        super.render(batch, shapeRenderer);
+        scoreText.render(batch, shapeRenderer, GameRenderer.fontShader);
     }
-    public void setBestText(int score){
-        bestText.setText(Configuration.BEST_TEXT + score);
+
+    public void setScoreText(String score) {
+        scoreText.setText(score);
     }
+
+    public void setBestText(String score) {
+        bestText.setText(score);
+    }
+
+
 }

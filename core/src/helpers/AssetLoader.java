@@ -2,6 +2,8 @@ package helpers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -16,7 +18,10 @@ public class AssetLoader {
 
     public static Texture backgroundMenuT, titleT, buttonsT;
     public static TextureRegion backgroundMenu, title, playButton, practiceButton, scoresButton, shareButton, homeButton,
-            scoreBack, timerBack, tutorial;
+            scoreBack, timerBack, tutorial, noMusicButton, musicButton, soundButton, nosoundButton;
+
+    public static Sound netS, swoosh, buzzer, click;
+    public static Music music;
 
     private static Preferences prefs;
     public static BitmapFont font, font08;
@@ -67,7 +72,6 @@ public class AssetLoader {
         pointerT.setFilter(TextureFilter.Linear, TextureFilter.Linear);
         pointer = new TextureRegion(pointerT);
 
-
         //MENU
         //BACKGROUND MENU
         backgroundMenuT = getAssetTexture("background_menu.png");
@@ -93,6 +97,21 @@ public class AssetLoader {
                 buttonsT.getWidth(), buttonsT.getHeight() / numOfLines);
         homeButton = new TextureRegion(buttonsT, 0, (buttonsT.getHeight() / numOfLines) * 4,
                 168, buttonsT.getHeight() / numOfLines);
+
+        //MUSIC BUTTONS
+        Texture musicButtons = getAssetTexture("musicbuttons.png");
+        noMusicButton = new TextureRegion(musicButtons, 0, 0, musicButtons.getWidth() / 2,
+                musicButtons.getHeight());
+        musicButton = new TextureRegion(musicButtons, musicButtons.getWidth() / 2, 0,
+                musicButtons.getWidth() / 2, musicButtons.getHeight());
+
+        //SOUND BUTTONS
+        Texture soundButtons = getAssetTexture("soundbuttons.png");
+        nosoundButton = new TextureRegion(soundButtons, 0, 0, soundButtons.getWidth() / 2,
+                soundButtons.getHeight());
+        soundButton = new TextureRegion(soundButtons, soundButtons.getWidth() / 2, 0,
+                soundButtons.getWidth() / 2, soundButtons.getHeight());
+
 
         //SCOREBACK
         scoreBack = new TextureRegion(getAssetTexture("scoreback.png"));
@@ -124,6 +143,14 @@ public class AssetLoader {
         if (!prefs.contains("games")) {
             prefs.putInteger("games", 0);
         }
+
+        //Sounds
+        netS = getAssetSound("sounds/net.wav");
+        swoosh = getAssetSound("sounds/swoosh.wav");
+        buzzer = getAssetSound("sounds/buzzer.wav");
+        click = getAssetSound("sounds/click.wav");
+        music = Assets.manager.get("sounds/music.wav", Music.class);
+
     }
 
     public static void dispose() {
@@ -187,6 +214,15 @@ public class AssetLoader {
         prefs.flush();
     }
 
+    public static boolean getSounds() {
+        return prefs.getBoolean("sound",true);
+    }
+
+    public static void setSounds(boolean val) {
+        prefs.putBoolean("sound", val);
+        prefs.flush();
+    }
+
     public static boolean getVolume() {
         return prefs.getBoolean("volume");
     }
@@ -194,5 +230,9 @@ public class AssetLoader {
 
     public static Texture getAssetTexture(String fileName) {
         return Assets.manager.get(fileName, Texture.class);
+    }
+
+    public static Sound getAssetSound(String fileName) {
+        return Assets.manager.get(fileName, Sound.class);
     }
 }

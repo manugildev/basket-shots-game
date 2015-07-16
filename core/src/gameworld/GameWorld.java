@@ -138,6 +138,8 @@ public class GameWorld {
         if (state == STATE.GAME)
             timerUI.startTimer(Settings.INITIAL_TIME, 2f);
 
+        scoreUI.setScoreText(Configuration.SCORE_TEXT + score);
+
 
     }
 
@@ -186,9 +188,9 @@ public class GameWorld {
 
     public void addScore(int i) {
         score += i;
-        scoreUI.setScoreText(score);
+        scoreUI.setScoreText(Configuration.SCORE_TEXT + score);
         if (score > AssetLoader.getHighScore()) {
-            scoreUI.setBestText(score);
+            scoreUI.setBestText(Configuration.BEST_TEXT + (score));
         }
     }
 
@@ -257,6 +259,7 @@ public class GameWorld {
 
         timerUI.manager.killAll();
         timerUI.timer.setValue(0);
+        if(AssetLoader.getSounds())        AssetLoader.buzzer.play();
     }
 
     private void saveScoreLogic() {

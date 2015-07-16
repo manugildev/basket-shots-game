@@ -14,6 +14,7 @@ import aurelienribon.tweenengine.TweenEquations;
 import aurelienribon.tweenengine.TweenManager;
 import configuration.Configuration;
 import gameworld.GameWorld;
+import helpers.AssetLoader;
 import helpers.FlatColors;
 import tweens.SpriteAccessor;
 import tweens.VectorAccessor;
@@ -140,6 +141,7 @@ public class GameObject {
     public boolean isTouchUp(int screenX, int screenY) {
         if (rectangle.contains(screenX, screenY) && isPressed) {
             isPressed = false;
+            AssetLoader.click.play();
             return true;
         }
         isPressed = false;

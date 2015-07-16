@@ -105,6 +105,7 @@ public class Launcher {
         if (isPressed) {
             isPressed = false;
             currentBall.flight(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
+            if(AssetLoader.getSounds()) AssetLoader.swoosh.play();
         }
 
     }

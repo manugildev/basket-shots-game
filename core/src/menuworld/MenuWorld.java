@@ -12,6 +12,7 @@ import MainGame.BasketballGame;
 import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
+import configuration.Configuration;
 import gameobjects.GameObject;
 import gameworld.GameWorld;
 import helpers.AssetLoader;
@@ -21,6 +22,9 @@ import screens.MenuScreen;
 import tweens.SpriteAccessor;
 import tweens.Value;
 import ui.MenuButton;
+import ui.MusicButton;
+import ui.ScoresUI;
+import ui.SoundButton;
 
 public class MenuWorld extends GameWorld {
 
@@ -28,10 +32,12 @@ public class MenuWorld extends GameWorld {
     public ArrayList<MenuButton> menuButtons = new ArrayList<MenuButton>();
     private ArrayList<TextureRegion> buttonTextures = new ArrayList<TextureRegion>();
     public ActionResolver actionResolver;
+    public MusicButton musicButton;
+    public SoundButton soundButton;
 
     public MenuWorld(BasketballGame game, ActionResolver actionResolver, float gameWidth,
                      float gameHeight) {
-        super(game, actionResolver, gameWidth, gameHeight,null);
+        super(game, actionResolver, gameWidth, gameHeight, null);
         this.actionResolver = actionResolver;
         top = new GameObject(this, 0, 0, gameWidth, gameHeight, AssetLoader.square, Color.BLACK,
                 GameObject.Shape.RECTANGLE);
@@ -43,6 +49,12 @@ public class MenuWorld extends GameWorld {
                 AssetLoader.title.getRegionWidth(), AssetLoader.title.getRegionHeight(),
                 AssetLoader.title,
                 FlatColors.WHITE, GameObject.Shape.RECTANGLE);
+        scoreUI = new ScoresUI(this, gameWidth - 400,
+                gameHeight - 45 - AssetLoader.scoreBack.getRegionHeight(),
+                AssetLoader.scoreBack.getRegionWidth(), AssetLoader.scoreBack.getRegionHeight(),
+                AssetLoader.scoreBack, FlatColors.WHITE,
+                GameObject.Shape.RECTANGLE);
+        scoreUI.setScoreText(Configuration.BEST_TEXT + AssetLoader.getHighScore());
         buttonTextures.add(AssetLoader.playButton);
         buttonTextures.add(AssetLoader.practiceButton);
         buttonTextures.add(AssetLoader.scoresButton);
@@ -56,7 +68,20 @@ public class MenuWorld extends GameWorld {
                     FlatColors.WHITE, GameObject.Shape.RECTANGLE);
             menuButtons.add(b);
         }
+
+        musicButton = new MusicButton(
+                gameWidth / 2 - (AssetLoader.musicButton.getRegionWidth() / 2) - 20,
+                scoreUI.getRectangle().y, AssetLoader.musicButton.getRegionWidth() / 2,
+                AssetLoader.noMusicButton.getRegionHeight() / 2, AssetLoader.noMusicButton,
+                AssetLoader.musicButton, Color.WHITE);
+
+        soundButton = new SoundButton(gameWidth / 2 + 20, scoreUI.getRectangle().y,
+                AssetLoader.soundButton.getRegionWidth() / 2,
+                AssetLoader.soundButton.getRegionHeight() / 2, AssetLoader.nosoundButton,
+                AssetLoader.soundButton, Color.WHITE);
+
         startEffects();
+        checkIfMusicWasPlaying();
     }
 
     private void startEffects() {
@@ -68,6 +93,7 @@ public class MenuWorld extends GameWorld {
             menuButtons.get(i).effectX(menuButtons.get(i).getPosition().x + gameWidth / 2,
                     menuButtons.get(i).getPosition().x, .5f, 0.04f * i + (0.5f));
         }
+        scoreUI.effectY(scoreUI.getPosition().y + gameHeight, scoreUI.getPosition().y, .5f, .6f);
 
     }
 
@@ -78,6 +104,11 @@ public class MenuWorld extends GameWorld {
         for (int i = 0; i < menuButtons.size(); i++) {
             menuButtons.get(i).update(delta);
         }
+        scoreUI.update(delta);
+        musicButton.update(delta);
+        musicButton.sprite.setY(scoreUI.getRectangle().y);
+        soundButton.update(delta);
+        soundButton.sprite.setY(scoreUI.getRectangle().y);
 
     }
 
@@ -87,8 +118,27 @@ public class MenuWorld extends GameWorld {
         for (int i = 0; i < menuButtons.size(); i++) {
             menuButtons.get(i).render(batch, shapeRenderer);
         }
+        scoreUI.renderMenu(batch, shapeRenderer);
+        musicButton.draw(batch);
+        soundButton.draw(batch);
         top.render(batch, shapeRenderer);
     }
+
+    private void checkIfMusicWasPlaying() {
+        if (AssetLoader.getVolume()) {
+            AssetLoader.music.setLooping(true);
+            AssetLoader.music.play();
+            AssetLoader.music.setVolume(Configuration.MUSIC_VOLUME);
+            AssetLoader.setVolume(true);
+        } else AssetLoader.music.pause();
+
+        if (AssetLoader.music.isPlaying()) musicButton.setIsPressed(false);
+        else musicButton.setIsPressed(true);
+
+        if (AssetLoader.getSounds()) soundButton.setIsPressed(false);
+        else soundButton.setIsPressed(true);
+    }
+
 
     public void goToGameScreen() {
         finishEffects();
@@ -106,6 +156,7 @@ public class MenuWorld extends GameWorld {
     private void finishEffects() {
         top.fadeIn(.5f, .5f);
         title.effectY(title.getPosition().y, title.getPosition().y + gameHeight, .5f, .0f);
+        scoreUI.effectY(scoreUI.getPosition().y, scoreUI.getPosition().y + gameHeight, .5f, 0f);
         for (int i = menuButtons.size() - 1; i >= 0; i--) {
             menuButtons.get(i).effectX(menuButtons.get(i).getPosition().x,
                     menuButtons.get(i).getPosition().x + gameWidth / 2, .5f,

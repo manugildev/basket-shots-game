@@ -38,4 +38,6 @@ public class Settings {
     public static final short MASK_BALL = CATEGORY_FLOOR | CATEGORY_BASKET ; // or ~CATEGORY_PLAYER
     public static final short MASK_FLOOR = CATEGORY_BALL; // or ~CATEGORY_MONSTER
     public static final short MASK_BASKET = CATEGORY_BALL;
+
+   
 }

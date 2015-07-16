@@ -46,6 +46,10 @@ public class InputHandlerMenu implements InputProcessor {
         for (int i = 0; i < world.menuButtons.size(); i++) {
             world.menuButtons.get(i).isTouchDown(screenX, screenY);
         }
+
+        world.musicButton.isTouchDown(screenX,screenY);
+        world.soundButton.isTouchDown(screenX,screenY);
+
         return false;
     }
 
@@ -61,7 +65,7 @@ public class InputHandlerMenu implements InputProcessor {
             world.actionResolver.showScores();
         } else if (world.menuButtons.get(3).isTouchUp(screenX, screenY)) {
             world.actionResolver.shareGame(Configuration.SHARE_MESSAGE);
-        }
+            }
         return false;
     }
 
