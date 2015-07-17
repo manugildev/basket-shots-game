@@ -21,6 +21,7 @@ public class Settings {
     public static final float REDUCTION_EVERY_POINT = 0.5f;
 
     //BALL
+    public static final float BALL_SIZE = 100;
     public static final float BALL_FORCE_SCALE = 0.07f;
     public static final boolean FADE_OUT_ON_FLOOR = true; //Set to false for testing
     public static final int NUM_OF_INITIAL_BALLS = 20; //Dont change this

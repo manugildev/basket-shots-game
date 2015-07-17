@@ -31,6 +31,7 @@ public class LoadingScreen implements Screen {
     private boolean goingToMenu = false, finishedTween = false;
 
     public LoadingScreen(BasketballGame game, ActionResolver actionresolver) {
+
         this.game = game;
         this.actionResolver = actionresolver;
         float width = Gdx.graphics.getWidth();

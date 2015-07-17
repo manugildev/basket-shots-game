@@ -3,7 +3,6 @@ package MainGame;
 import com.badlogic.gdx.Game;
 
 import aurelienribon.tweenengine.Tween;
-import helpers.AssetLoader;
 import helpers.Assets;
 import screens.Boot;
 
@@ -13,11 +12,11 @@ public class BasketballGame extends Game {
 
     public BasketballGame(ActionResolver actionresolver) {
         this.actionresolver = actionresolver;
+        Assets.load();
     }
 
     @Override
     public void create() {
-        Assets.load();
         Tween.setCombinedAttributesLimit(10);
         setScreen(new Boot(this, actionresolver));
     }
@@ -30,13 +29,14 @@ public class BasketballGame extends Game {
     @Override
     public void dispose() {
         super.dispose();
-        AssetLoader.dispose();
-        Assets.dispose();
+        Assets.manager.dispose();
+        Assets.manager = null;
     }
 
     @Override
     public void resume() {
-        super.resume();
-        Assets.manager.finishLoading();
+       if (!Assets.manager.update()) {
+            setScreen(new Boot(this, actionresolver));
+        }
     }
 }

@@ -99,7 +99,7 @@ public class GameWorld {
         /*ball = new Ball(this, gameWidth / 2, gameHeight / 2, 100, 100, AssetLoader.ball,
                 FlatColors.WHITE, GameObject.Shape.CIRCLE);*/
         for (int i = 0; i < Settings.NUM_OF_INITIAL_BALLS; i++) {
-            Ball b = new Ball(this, gameWidth / 2, gameHeight / 2, 100, 100, AssetLoader.ball,
+            Ball b = new Ball(this, gameWidth / 2, gameHeight / 2, Settings.BALL_SIZE, Settings.BALL_SIZE, AssetLoader.ball,
                     FlatColors.WHITE, GameObject.Shape.CIRCLE);
             balls.add(b);
         }

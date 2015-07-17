@@ -8,10 +8,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class Assets {
 
-    public static AssetManager manager = new AssetManager();
+    public static AssetManager manager;
 
     public static void load() {
-
+        manager = new AssetManager();
+        Texture.setAssetManager(manager);
         //Textures
         manager.load("arrow.png", Texture.class);
         manager.load("arrowBot.png", Texture.class);
