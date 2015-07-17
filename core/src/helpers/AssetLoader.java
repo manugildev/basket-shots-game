@@ -149,12 +149,13 @@ public class AssetLoader {
         swoosh = getAssetSound("sounds/swoosh.wav");
         buzzer = getAssetSound("sounds/buzzer.wav");
         click = getAssetSound("sounds/click.wav");
-        music = Assets.manager.get("sounds/music.wav", Music.class);
+        music = Assets.manager.get("sounds/music.mp3", Music.class);
 
     }
 
     public static void dispose() {
-
+        font.dispose();
+        font08.dispose();
     }
 
     public static void setHighScore(int val) {
@@ -211,7 +212,7 @@ public class AssetLoader {
     }
 
     public static boolean getSounds() {
-        return prefs.getBoolean("sound",true);
+        return prefs.getBoolean("sound", true);
     }
 
     public static void setSounds(boolean val) {

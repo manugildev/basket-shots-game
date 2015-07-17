@@ -91,12 +91,14 @@ public class Launcher {
 
     public void touchDown(int x, int y) {
         if (world.tutorial.rectangle.contains(x, y)) {
-            isPressed = true;
-            point1.set(x, y);
-            point2.set(x, y);
-            currentBall = world.getIdleBall();
-            currentBall.resetScoreLogics();
-        }else{
+            if (world.ballsUI.balls > 0) {
+                isPressed = true;
+                point1.set(x, y);
+                point2.set(x, y);
+                currentBall = world.getIdleBall();
+                currentBall.resetScoreLogics();
+            }
+        } else {
             world.tutorialEffect();
         }
     }
@@ -105,7 +107,9 @@ public class Launcher {
         if (isPressed) {
             isPressed = false;
             currentBall.flight(velFromTwoPoints(point1, point2).scl(Settings.BALL_FORCE_SCALE));
-            if(AssetLoader.getSounds()) AssetLoader.swoosh.play();
+            if (world.state == GameWorld.STATE.GAME)
+                world.ballsUI.removeBall(1);
+            if (AssetLoader.getSounds()) AssetLoader.swoosh.play();
         }
 
     }

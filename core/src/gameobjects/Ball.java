@@ -70,7 +70,7 @@ public class Ball extends GameObject {
         circle.setRadius(sprite.getWidth() / 2);
 
         pointer = new Sprite(AssetLoader.pointer);
-        pointer.setPosition(-100,-100);
+        pointer.setPosition(-100, -100);
         pointer.setSize(50, 50);
         pointer.setColor(FlatColors.parseColor(Settings.TOP_POINTER_COLOR));
 
@@ -88,7 +88,7 @@ public class Ball extends GameObject {
             body.setLinearVelocity(Vector2.Zero);
             body.setAngularVelocity(0);
             body.setGravityScale(0);
-            body.setTransform(new Vector2(-500,-500), 0);
+            body.setTransform(new Vector2(-500, -500), 0);
         } else {
             sprite.setPosition((body.getPosition().x * Settings.PTM),
                     (body.getPosition().y * Settings.PTM));
@@ -127,8 +127,14 @@ public class Ball extends GameObject {
         if (Intersector.overlaps(circle, world.floor.rectangle) && isFlying()) {
             touchedFloor();
         }
-        if (sprite.getX() < -100) {
-            touchedFloor();
+        if (isFlying()) {
+            if (sprite.getY() < -500 ||  sprite.getX() < -500 || sprite
+                    .getX() > world.gameWidth + 500) {
+                touchedFloor();
+                if (world.ballsUI.balls <= 0) {
+                    world.finish();
+                }
+            }
         }
     }
 
@@ -179,6 +185,9 @@ public class Ball extends GameObject {
                 }
             }).setCallbackTriggers(TweenCallback.COMPLETE).start(getManager());
             world.basket.resetScoreLogic();
+            if (world.ballsUI.balls <= 0) {
+                world.finish();
+            }
         }
     }
 

@@ -4,10 +4,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class Assets {
 
-    public static final AssetManager manager = new AssetManager();
+    public static AssetManager manager = new AssetManager();
 
     public static void load() {
 
@@ -32,6 +33,9 @@ public class Assets {
         manager.load("title.png", Texture.class);
         manager.load("tutorial.png", Texture.class);
 
+        //Font
+        manager.load("misc/font.fnt", BitmapFont.class);
+
         //Sounds
         manager.load("sounds/net.wav", Sound.class);
         manager.load("sounds/swoosh.wav", Sound.class);
@@ -39,7 +43,7 @@ public class Assets {
         manager.load("sounds/click.wav", Sound.class);
 
         //Music
-        manager.load("sounds/music.wav", Music.class);
+        manager.load("sounds/music.mp3", Music.class);
     }
 
     public static void dispose() {

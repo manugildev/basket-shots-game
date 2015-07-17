@@ -23,8 +23,9 @@ public class Settings {
     //BALL
     public static final float BALL_FORCE_SCALE = 0.07f;
     public static final boolean FADE_OUT_ON_FLOOR = true; //Set to false for testing
-    public static final int NUM_OF_INITIAL_BALLS = 20;
+    public static final int NUM_OF_INITIAL_BALLS = 20; //Dont change this
     public static final String TOP_POINTER_COLOR = FlatColors.DARK_BLACK.toString();
+    public static final int NUM_OF_INITIAL_BALLS_FOR_PLAYING = 15;
 
     //ARROw
     public static final float ARROW_WIDTH = 100;
@@ -39,5 +40,5 @@ public class Settings {
     public static final short MASK_FLOOR = CATEGORY_BALL; // or ~CATEGORY_MONSTER
     public static final short MASK_BASKET = CATEGORY_BALL;
 
-   
+
 }

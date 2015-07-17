@@ -31,7 +31,12 @@ public class BasketballGame extends Game {
     public void dispose() {
         super.dispose();
         AssetLoader.dispose();
+        Assets.dispose();
     }
 
-
+    @Override
+    public void resume() {
+        super.resume();
+        Assets.manager.finishLoading();
+    }
 }

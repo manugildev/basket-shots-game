@@ -171,7 +171,7 @@ public class AndroidLauncher extends AndroidApplication implements
     @Override
     protected void onStart() {
         super.onStart();
-            _gameHelper.onStart(this);
+        _gameHelper.onStart(this);
     }
 
     @Override
@@ -274,11 +274,9 @@ public class AndroidLauncher extends AndroidApplication implements
     @Override
     public void showScores() {
         if (isSignedIn())
-            startActivityForResult(
-                    Games.Leaderboards.getAllLeaderboardsIntent(_gameHelper
-                            .getApiClient()), REQUEST_CODE_UNUSED);
-            // Games.Leaderboards.getLeaderboardIntent( _gameHelper.getApiClient(),
-            // C.LEADERBOARD_ID),REQUEST_CODE_UNUSED)
+            startActivityForResult(Games.Leaderboards.getAllLeaderboardsIntent(_gameHelper
+                    .getApiClient()), REQUEST_CODE_UNUSED);
+
         else {
             signIn();
         }
@@ -337,7 +335,7 @@ public class AndroidLauncher extends AndroidApplication implements
         }
     }
 
-       @Override
+    @Override
     public void toast(final String text) {
         handler.post(new Runnable() {
             @Override

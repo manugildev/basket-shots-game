@@ -173,9 +173,11 @@ public class Basket extends GameObject {
 
     private void scoreAPoint() {
         world.addScore(1);
-        if(world.state == GameWorld.STATE.GAME)
-        world.timerUI.reset();
-        if(AssetLoader.getSounds())        AssetLoader.netS.play();
+        if (world.state == GameWorld.STATE.GAME)
+            //world.timerUI.reset();
+            world.ballsUI.addBall(1);
+        world.ballsUI.effectBall();
+        if (AssetLoader.getSounds()) AssetLoader.netS.play();
     }
 
     public void resetScoreLogic() {
