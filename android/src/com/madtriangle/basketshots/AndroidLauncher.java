@@ -52,7 +52,6 @@ public class AndroidLauncher extends AndroidApplication implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
         prefs = getSharedPreferences(Configuration.GAME_NAME, Context.MODE_PRIVATE);
         cfg.useAccelerometer = false;
