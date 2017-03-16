@@ -16,9 +16,6 @@ import gameworld.GameWorld;
 import helpers.AssetLoader;
 import helpers.FlatColors;
 
-/**
- * Created by ManuGil on 08/07/15.
- */
 public class Launcher {
     private ArrayList<Vector2> points = new ArrayList<Vector2>();
     private Vector2 point1 = new Vector2(), point2 = new Vector2();
@@ -27,6 +24,7 @@ public class Launcher {
     private Sprite sprite, arrowCap;
     private Ball currentBall;
     public Rectangle rect;
+    Vector2 launchVelocity;
 
     public Launcher(GameWorld world) {
         this.world = world;
@@ -81,11 +79,15 @@ public class Launcher {
                 shapeRenderer.setColor(FlatColors.RED);
                 shapeRenderer.circle(point1.x, point1.y, 5);
                 shapeRenderer.circle(point2.x, point2.y, 5);
+                for(int i = 0;i<points.size();i++)
+                    shapeRenderer.circle(points.get(i).x,points.get(i).x,2);
                 shapeRenderer.end();
                 batch.begin();
             }
             sprite.draw(batch);
             arrowCap.draw(batch);
+
+
         }
     }
 
@@ -110,6 +112,7 @@ public class Launcher {
             if (world.state == GameWorld.STATE.GAME)
                 world.ballsUI.removeBall(1);
             if (AssetLoader.getSounds()) AssetLoader.swoosh.play();
+
         }
 
     }
@@ -122,6 +125,8 @@ public class Launcher {
         fadeColor(FlatColors.parseColor(Settings.ARROW_RED_COLOR),
                 FlatColors.parseColor(Settings.ARROW_GREEN_COLOR),
                 distanceBetweenTwoPoints(point1, point2) - 250);
+
+
     }
 
     public static float angleBetweenTwoPoints(Vector2 one, Vector2 two) {
@@ -161,4 +166,6 @@ public class Launcher {
 
         }
     }
+
+
 }

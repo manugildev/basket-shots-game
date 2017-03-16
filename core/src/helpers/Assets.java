@@ -33,7 +33,6 @@ public class Assets {
         manager.load("timerback.png", Texture.class);
         manager.load("title.png", Texture.class);
         manager.load("tutorial.png", Texture.class);
-
         //Font
         manager.load("misc/font.fnt", BitmapFont.class);
 
